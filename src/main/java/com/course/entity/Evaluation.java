@@ -12,11 +12,12 @@ import javax.persistence.*;
 @Table(name = "evaluation")
 public class Evaluation extends BaseEntity<String> {
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "activity_id")
     private Activity activityId;
 
-    @Column(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User studentId;
 
     @OneToOne(mappedBy = "evaluationId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
