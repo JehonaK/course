@@ -12,7 +12,8 @@ public class ResponseException extends RuntimeException {
 
     public ResponseException(String errorMessage, HttpStatus httpStatus) {
         super(errorMessage);
-        setHttpStatus(httpStatus);
-        log.error(errorMessage);
+        //setHttpStatus(httpStatus);
+        //log.error(errorMessage);
     }
+
 }
