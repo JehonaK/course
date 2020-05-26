@@ -58,18 +58,6 @@ public class FileUploadController {
         }
     }
 
-    @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody FileUpload fileUpload, @PathVariable String id) throws ResponseException {
-        Map<String, String> responseMap = new HashMap<>();
-        try {
-            fileUploadService.update(fileUpload, id);
-            responseMap.put("id", id);
-        } catch (Exception e) {
-            throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return responseMap;
-    }
-
     @DeleteMapping("{id}")
     public void remove(@PathVariable String id) throws ResponseException {
         try {

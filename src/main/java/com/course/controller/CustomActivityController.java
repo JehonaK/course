@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("custom_activity")
+@RequestMapping("custom-activity")
 public class CustomActivityController {
 
     private CustomActivityServiceImpl customActivityService;

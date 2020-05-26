@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("forum_post")
+@RequestMapping("forum-post")
 public class ForumPostController {
 
     private ForumPostServiceImpl forumPostService;
