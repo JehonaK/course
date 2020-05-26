@@ -51,7 +51,7 @@ public class FileUploadController {
     public FileUpload create(@RequestBody FileUpload fileUpload, @RequestParam("file") MultipartFile multipartFile) {
         try {
             FileUpload upload = fileUploadService.save(fileUpload);
-            uploadingService.uploadFile(upload, multipartFile.getInputStream());
+            uploadingService.uploadFile(upload, multipartFile.getInputStream(), multipartFile.getOriginalFilename());
             return upload;
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);

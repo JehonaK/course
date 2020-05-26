@@ -70,4 +70,7 @@ public abstract class BaseEntity<T> {
         this.createDateTime = createDateTime;
     }
 
+    public void setRecordStatus(RecordStatus recordStatus) {
+        this.recordStatus = recordStatus;
+    }
 }

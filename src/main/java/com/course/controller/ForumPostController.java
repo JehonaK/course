@@ -1,7 +1,11 @@
 package com.course.controller;
 
+import com.course.PerRequestIdStorage;
 import com.course.entity.ForumPost;
+import com.course.entity.User;
 import com.course.exception.ResponseException;
+import com.course.integration.models.SerializableNotification;
+import com.course.integration.producers.NotificationProducer;
 import com.course.service.ForumPostServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

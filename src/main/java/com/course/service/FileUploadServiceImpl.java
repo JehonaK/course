@@ -5,6 +5,7 @@ import com.course.entity.Evaluation;
 import com.course.entity.FileUpload;
 import com.course.repository.BaseRepository;
 import com.course.repository.FileUploadRepository;
+import com.course.util.FileDataContainer;
 import com.dropbox.core.DbxException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -47,11 +48,12 @@ public class FileUploadServiceImpl extends BaseServiceImpl<FileUpload, String> i
     @Override
     public ResponseEntity<Resource> downloadFileByFileUploadId(String fileUploadId) throws DbxException, IOException {
         FileUpload fileUpload = findById(fileUploadId);
-        InputStream inputStream = uploadingService.downloadFile(fileUpload);
-        InputStreamResource resource = new InputStreamResource(inputStream);
+        FileDataContainer fileDataContainer = uploadingService.downloadFile(fileUpload);
+        InputStreamResource resource = new InputStreamResource(fileDataContainer.getInputStream());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=" + fileDataContainer.getFileName());
         return ResponseEntity.ok()
-                .headers(HttpHeaders.EMPTY)
-                .contentLength(inputStream.readAllBytes().length*8)
+                .headers(headers)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
     }

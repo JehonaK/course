@@ -3,11 +3,13 @@ package com.course.service;
 import com.course.PerRequestIdStorage;
 import com.course.entity.Course;
 import com.course.entity.User;
+import com.course.integration.models.SerializableTeacherSubjectConnection;
 import com.course.repository.BaseRepository;
 import com.course.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CourseServiceImpl extends BaseServiceImpl<Course, String> implements CourseService {
@@ -35,4 +37,12 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
         return student.getCoursesEnrolled();
     }
 
+    @Override
+    public void handleNewTeacherSubjectConnection(SerializableTeacherSubjectConnection connection) {
+        User teacher = userService.findById(connection.getTeacherId());
+        List<User> students = userService.findBatchOfUsersByIdList(connection.getStudentsId());
+        Course course = new Course(UUID.randomUUID().toString(), connection.getCourseName(), "No description", teacher);
+        course.setStudents(students);
+        save(course);
+    }
 }

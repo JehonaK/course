@@ -50,6 +50,13 @@ public class Course extends BaseEntity<String>{
         this.subjectId = subjectId;
     }
 
+    public Course(String id, String name, String description, User teacherId) {
+        super(id);
+        this.name = name;
+        this.description = description;
+        this.teacherId = teacherId;
+    }
+
     public String getName() {
         return name;
     }
