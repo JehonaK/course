@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConnectionConsumer {
 
-    private CourseServiceImpl courseService;
-
-    public ConnectionConsumer(CourseServiceImpl courseService) {
-        this.courseService = courseService;
-    }
-
-    @RabbitListener(queues = {"${queue.connection.teacher.subject}"})
-    public void handleNewUserReception(SerializableTeacherSubjectConnection teacherSubjectConnection) {
-        courseService.handleNewTeacherSubjectConnection(teacherSubjectConnection);
-    }
+//    private CourseServiceImpl courseService;
+//
+//    public ConnectionConsumer(CourseServiceImpl courseService) {
+//        this.courseService = courseService;
+//    }
+//
+//    @RabbitListener(queues = {"${queue.connection.teacher.subject}"})
+//    public void handleNewUserReception(SerializableTeacherSubjectConnection teacherSubjectConnection) {
+//        courseService.handleNewTeacherSubjectConnection(teacherSubjectConnection);
+//    }
 
 }

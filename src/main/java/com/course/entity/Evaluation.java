@@ -12,16 +12,13 @@ import javax.persistence.*;
 @Table(name = "evaluation")
 public class Evaluation extends BaseEntity<String> {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activityId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "student_id")
     private User studentId;
-
-    @OneToOne(mappedBy = "evaluationId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private FileUpload fileUpload;
 
     @Column(name = "grade")
     private String grade;
@@ -31,6 +28,11 @@ public class Evaluation extends BaseEntity<String> {
 
     @Column(name = "feedback")
     private String feedback;
+
+//    @OneToOne(mappedBy = "evaluationId", fetch = FetchType.EAGER)
+//    private FileUpload fileUpload;
+
+    public Evaluation() {}
 
     public Evaluation(String id, String grade, GradeSystem gradeSystem, Activity activityId, User studentId) {
         super(id);
@@ -89,11 +91,4 @@ public class Evaluation extends BaseEntity<String> {
         this.feedback = feedback;
     }
 
-    public FileUpload getFileUpload() {
-        return fileUpload;
-    }
-
-    public void setFileUpload(FileUpload fileUpload) {
-        this.fileUpload = fileUpload;
-    }
 }

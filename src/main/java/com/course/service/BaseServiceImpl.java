@@ -46,6 +46,7 @@ public class BaseServiceImpl<T extends BaseEntity<U>, U> {
         return foundT;
     }
 
+    @Transactional
     public void remove(U u) throws NotFoundException {
         if (u == null) {
             throw new IllegalArgumentException("Invalid argument" + u);
@@ -54,8 +55,7 @@ public class BaseServiceImpl<T extends BaseEntity<U>, U> {
         if (t == null) {
             throw new NotFoundException("Entity not found" + t);
         }
-
-        t.setRecordStatus(RecordStatus.INACTIVE);
+        baseRepository.delete(t);
     }
 
     public T findById(U u) {

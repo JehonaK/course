@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Comment extends BaseEntity<String> {
     @Column(name = "content")
     private String content;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private ForumPost postId;
@@ -20,6 +22,8 @@ public class Comment extends BaseEntity<String> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User authorId;
+
+    public Comment() {}
 
     public Comment(String id, Timestamp createDateTime, String content, ForumPost postId, User authorId) {
         super(id, createDateTime);

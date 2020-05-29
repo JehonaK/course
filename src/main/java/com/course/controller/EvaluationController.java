@@ -6,6 +6,7 @@ import com.course.service.EvaluationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class EvaluationController {
     }
 
     @GetMapping
-    public List<Evaluation> getEvaluationsByStudentIdAndCourseId(@RequestParam("studentId") String studentId, @RequestParam("courseId") String courseId) {
+    public List<Evaluation> getEvaluationsByStudentIdAndCourseId(@RequestParam(required = false) String studentId, @RequestParam("courseId") String courseId) {
         return evaluationService.getEvaluationsByStudentIdAndCourseId(studentId, courseId);
     }
 
@@ -51,6 +52,7 @@ public class EvaluationController {
         return responseMap;
     }
 
+    @Transactional
     @DeleteMapping("{id}")
     public void remove(@PathVariable String id) throws ResponseException {
         try {

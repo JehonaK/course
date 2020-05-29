@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class ActivityServiceImpl extends BaseServiceImpl<Activity, String> implements ActivityService {
+
     private ActivityRepository activityRepository;
     private CourseServiceImpl courseService;
 
@@ -24,4 +25,11 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, String> imple
         Course course = courseService.findById(courseId);
         return activityRepository.findByCourseId(course);
     }
+
+    @Override
+    public Activity save(Activity activity) {
+        Activity savedActivity = super.save(activity);
+        return savedActivity;
+    }
+
 }

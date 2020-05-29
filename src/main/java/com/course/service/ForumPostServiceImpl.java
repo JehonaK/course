@@ -34,16 +34,17 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
     @Override
     public ForumPost save(ForumPost forumPost) {
         User author = userService.findById(PerRequestIdStorage.getUserId());
-        forumPost.setAuthorId(author);
-        notificationProducer.sendNotification(new SerializableNotification("New post in forum: " + forumPost.getTile(),
-                (ArrayList<String>) forumPost.getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toList())));
+        if(forumPost.getAuthorId() == null) forumPost.setAuthorId(author);
+//        notificationProducer.sendNotification(new SerializableNotification("New post in forum: " + forumPost.getTitle(),
+//                (ArrayList<String>) forumPost.getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toList())));
         return forumPostRepository.save(forumPost);
     }
 
     @Override
     public List<ForumPost> getForumPostsByStudentId(String studentId) {
         studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
-        List<Course> courses = courseService.getCoursesByStudentId(studentId);
+        User student = userService.findById(studentId);
+        List<Course> courses = student.getCoursesEnrolled();
         List<ForumPost> forumPosts = new ArrayList<>();
         for(Course course : courses) {
             forumPosts.addAll(course.getForumPosts());

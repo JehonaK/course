@@ -9,9 +9,12 @@ import java.sql.Timestamp;
 
 @MappedSuperclass
 @Data
-@NoArgsConstructor
 public abstract class BaseEntity<T> {
+
     @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", columnDefinition = "NVARCHAR(36)")
     private T id;
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +34,10 @@ public abstract class BaseEntity<T> {
 
     @Column(length = 1000)
     private String note;
+
+    public BaseEntity() {
+
+    }
 
     public BaseEntity(T id) {
         this.id = id;

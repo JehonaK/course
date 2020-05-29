@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("post-comment")
 public class CommentController {
 
     private CommentServiceImpl commentService;

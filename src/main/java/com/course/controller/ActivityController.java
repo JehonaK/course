@@ -6,6 +6,7 @@ import com.course.service.ActivityServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class ActivityController {
         return responseMap;
     }
 
+    @Transactional
     @DeleteMapping("{id}")
     public void remove(@PathVariable String id) throws ResponseException {
         try {

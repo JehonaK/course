@@ -9,7 +9,9 @@ import com.course.service.CustomActivityServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,6 +50,12 @@ public class CustomActivityController {
         return customActivityService.findById(customActivityId);
     }
 
+    @GetMapping
+    public List<CustomActivity> getByCourseId(@RequestParam String courseId) {
+        return customActivityService.getCustomActivityByCourseId(courseId);
+    }
+
+    @Transactional
     @DeleteMapping("{id}")
     public void remove(@PathVariable String id) throws ResponseException {
         try {

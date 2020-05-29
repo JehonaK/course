@@ -31,8 +31,8 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, String> impleme
     public Comment save(Comment comment) {
         User author = userService.findById(PerRequestIdStorage.getUserId());
         comment.setAuthorId(author);
-        notificationProducer.sendNotification(new SerializableNotification("Comment \"" + comment.getContent() + "\" in forum post with title \""
-                + comment.getPostId().getTile() + "\"", comment.getPostId().getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toCollection(ArrayList::new))));
+//        notificationProducer.sendNotification(new SerializableNotification("Comment \"" + comment.getContent() + "\" in forum post with title \""
+//                + comment.getPostId().getTitle() + "\"", comment.getPostId().getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toCollection(ArrayList::new))));
         return commentRepository.save(comment);
     }
 

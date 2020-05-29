@@ -1,9 +1,8 @@
 package com.course.entity;
 
 import com.course.type.GradeSystem;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,17 +19,41 @@ public class Activity extends BaseEntity<String>{
     @Column(name = "deadline")
     private Timestamp deadline;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(columnDefinition = "boolean default 0")
+    private boolean hasFileUpload = false;
+
+    @Column(name = "grade_system")
+    private GradeSystem gradeSystem;
+
+    @Column(name = "grade")
+    private String grade;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course courseId;
 
-    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY)
     private List<Evaluation> evaluations;
 
-    public Activity(String id, String name, Timestamp deadline, Course courseId, String comment) {
-        super(id, comment);
+    @JsonIgnore
+    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY)
+    private List<FileUpload> fileUploads;
+
+    public Activity() {}
+
+    public Activity(String id, String name, Timestamp deadline, String description, boolean hasFileUpload,
+                    GradeSystem gradeSystem, String grade, Course courseId) {
+        super(id);
         this.name = name;
         this.deadline = deadline;
+        this.description = description;
+        this.hasFileUpload = hasFileUpload;
+        this.gradeSystem = gradeSystem;
+        this.grade = grade;
         this.courseId = courseId;
     }
 
@@ -65,4 +88,45 @@ public class Activity extends BaseEntity<String>{
     public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isHasFileUpload() {
+        return hasFileUpload;
+    }
+
+    public void setHasFileUpload(boolean hasFileUpload) {
+        this.hasFileUpload = hasFileUpload;
+    }
+
+    public GradeSystem getGradeSystem() {
+        return gradeSystem;
+    }
+
+    public void setGradeSystem(GradeSystem gradeSystem) {
+        this.gradeSystem = gradeSystem;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public List<FileUpload> getFileUploads() {
+        return fileUploads;
+    }
+
+    public void setFileUploads(List<FileUpload> fileUploads) {
+        this.fileUploads = fileUploads;
+    }
+
 }

@@ -8,27 +8,26 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "file_upload")
-public class FileUpload extends BaseEntity<String>{
+public class FileUpload extends BaseEntity<String> {
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "evaluation_id")
-    private Evaluation evaluationId;
+    @ManyToOne
+    @JoinColumn(name = "activity_id")
+    private Activity activityId;
 
     @Column(name = "upload_time")
     private Timestamp uploadTime;
 
-    public FileUpload(String id, Evaluation evaluationId, Timestamp uploadTime) {
-        super(id);
-        this.evaluationId = evaluationId;
+    public FileUpload() {}
+
+    public FileUpload(Activity activityId, Timestamp uploadTime) {
+        this.activityId = activityId;
         this.uploadTime = uploadTime;
     }
 
-    public Evaluation getEvaluationId() {
-        return evaluationId;
-    }
-
-    public void setEvaluationId(Evaluation evaluationId) {
-        this.evaluationId = evaluationId;
+    public FileUpload(String id, Activity activityId, Timestamp uploadTime) {
+        super(id);
+        this.activityId = activityId;
+        this.uploadTime = uploadTime;
     }
 
     public Timestamp getUploadTime() {
@@ -39,4 +38,16 @@ public class FileUpload extends BaseEntity<String>{
         this.uploadTime = uploadTime;
     }
 
+    public Activity getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Activity activityId) {
+        this.activityId = activityId;
+    }
+
+    @Override
+    public String toString() {
+        return "FileUpload{}";
+    }
 }

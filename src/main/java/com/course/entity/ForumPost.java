@@ -1,8 +1,6 @@
 package com.course.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -13,34 +11,39 @@ import java.util.List;
 @Table(name = "forum_post")
 public class ForumPost extends BaseEntity<String>{
 
-    private String tile;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "content")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course courseId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private User authorId;
 
     @OneToMany(mappedBy = "postId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    public ForumPost(String id, Timestamp createDateTime, String tile, String content, Course courseId, User authorId) {
+    public ForumPost() {}
+
+    public ForumPost(String id, Timestamp createDateTime, String title, String content, Course courseId, User authorId) {
         super(id, createDateTime);
-        this.tile = tile;
+        this.title = title;
         this.content = content;
         this.courseId = courseId;
         this.authorId = authorId;
     }
 
-    public String getTile() {
-        return tile;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTile(String tile) {
-        this.tile = tile;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

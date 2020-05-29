@@ -10,25 +10,27 @@ import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
 
-@EnableRabbit
+//@EnableRabbit
 @Configuration
-public class ConsumerConfiguration implements RabbitListenerConfigurer {
+public class ConsumerConfiguration
+//        implements RabbitListenerConfigurer
+{
 
-    @Bean
-    public MessageConverter messageConverter() {
-        return new MappingJackson2MessageConverter();
-    }
-
-    @Bean
-    public MessageHandlerMethodFactory messageHandlerMethodFactory() {
-        DefaultMessageHandlerMethodFactory defaultMessageHandlerMethodFactory = new DefaultMessageHandlerMethodFactory();
-        defaultMessageHandlerMethodFactory.setMessageConverter(messageConverter());
-        return defaultMessageHandlerMethodFactory;
-    }
-
-    @Override
-    public void configureRabbitListeners(RabbitListenerEndpointRegistrar rabbitListenerEndpointRegistrar) {
-        rabbitListenerEndpointRegistrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
-    }
+//    @Bean
+//    public MessageConverter messageConverter() {
+//        return new MappingJackson2MessageConverter();
+//    }
+//
+//    @Bean
+//    public MessageHandlerMethodFactory messageHandlerMethodFactory() {
+//        DefaultMessageHandlerMethodFactory defaultMessageHandlerMethodFactory = new DefaultMessageHandlerMethodFactory();
+//        defaultMessageHandlerMethodFactory.setMessageConverter(messageConverter());
+//        return defaultMessageHandlerMethodFactory;
+//    }
+//
+//    @Override
+//    public void configureRabbitListeners(RabbitListenerEndpointRegistrar rabbitListenerEndpointRegistrar) {
+//        rabbitListenerEndpointRegistrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
+//    }
 
 }

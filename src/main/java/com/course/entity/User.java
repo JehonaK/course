@@ -1,28 +1,44 @@
 package com.course.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity<String> {
 
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "role")
     private String role;
 
-    @OneToMany(mappedBy = "authorId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "authorId", fetch = FetchType.LAZY)
     private List<ForumPost> forumPosts;
 
-    @OneToMany(mappedBy = "teacherId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Course> courses;
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacherId", fetch = FetchType.LAZY)
+    private List<Course> coursesTeaching;
 
-    @ManyToMany(mappedBy = "students")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     private List<Course> coursesEnrolled;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "studentId", fetch = FetchType.LAZY)
+    private List<Evaluation> evaluations;
+
+    public User() {}
 
     public User(String id, String firstName, String lastName, String email, String role) {
         super(id);
@@ -72,12 +88,12 @@ public class User extends BaseEntity<String> {
         this.forumPosts = forumPosts;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Course> getCoursesTeaching() {
+        return coursesTeaching;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCoursesTeaching(List<Course> coursesTeaching) {
+        this.coursesTeaching = coursesTeaching;
     }
 
     public List<Course> getCoursesEnrolled() {
@@ -87,4 +103,13 @@ public class User extends BaseEntity<String> {
     public void setCoursesEnrolled(List<Course> coursesEnrolled) {
         this.coursesEnrolled = coursesEnrolled;
     }
+
+    public List<Evaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setEvaluations(List<Evaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "course")
 public class Course extends BaseEntity<String>{
@@ -25,15 +25,19 @@ public class Course extends BaseEntity<String>{
     @Column(name = "subject_id")
     private String subjectId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Activity> activities;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CustomActivity> customActivities;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ForumPost> forumPosts;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "course_student",
@@ -41,6 +45,15 @@ public class Course extends BaseEntity<String>{
             inverseJoinColumns = { @JoinColumn(name = "student_id") }
     )
     private List<User> students;
+
+    public Course() {}
+
+    public Course(String name, String description, User teacherId, String subjectId) {
+        this.name = name;
+        this.description = description;
+        this.teacherId = teacherId;
+        this.subjectId = subjectId;
+    }
 
     public Course(String id, String name, String description, User teacherId, String subjectId) {
         super(id);

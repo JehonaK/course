@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QueuesConfiguration {
 
-    @Value("${queue.connection.teacher.subject}")
-    private String teacherSubjectConnectionQueue;
-
-    @Bean(name = "teacherSubjectConnectionQueue")
-    public Queue teacherSubjectConnectionQueue() {
-        return new Queue(teacherSubjectConnectionQueue);
-    }
+//    @Value("${queue.connection.teacher.subject}")
+//    private String teacherSubjectConnectionQueue;
+//
+//    @Bean(name = "teacherSubjectConnectionQueue")
+//    public Queue teacherSubjectConnectionQueue() {
+//        return new Queue(teacherSubjectConnectionQueue);
+//    }
 
 }

@@ -1,9 +1,7 @@
 package com.course.entity;
 
 import com.course.type.GradeSystem;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "custom_activity")
 public class CustomActivity extends BaseEntity<String>{
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course courseId;
 
@@ -30,6 +28,17 @@ public class CustomActivity extends BaseEntity<String>{
 
     @Column(name = "name")
     private String name;
+
+    public CustomActivity() {}
+
+    public CustomActivity(Course courseId, GradeSystem gradeSystem, boolean hasEvaluation, boolean hasFileUpload, boolean hasDeadline, String name) {
+        this.courseId = courseId;
+        this.gradeSystem = gradeSystem;
+        this.hasEvaluation = hasEvaluation;
+        this.hasFileUpload = hasFileUpload;
+        this.hasDeadline = hasDeadline;
+        this.name = name;
+    }
 
     public CustomActivity(String id, Course courseId, GradeSystem gradeSystem, boolean hasEvaluation, boolean hasFileUpload,
                           boolean hasDeadline, String name) {
