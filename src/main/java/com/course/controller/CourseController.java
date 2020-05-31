@@ -21,15 +21,6 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-//    @PostMapping
-//    public Course create(@RequestBody Course course){
-//        try {
-//            return courseService.save(course);
-//        } catch (Exception e) {
-//            throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
     @GetMapping("{courseId}")
     public Course getById(@PathVariable String courseId) {
         return courseService.findById(courseId);
