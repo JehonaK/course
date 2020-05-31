@@ -10,5 +10,7 @@ public interface CourseService {
 
     List<Course> getCoursesByStudentId(String studentId);
 
+    List<Course> getCoursesByCourseClassId(String courseClassId);
+
     void handleNewTeacherSubjectConnection(SerializableTeacherSubjectConnection connection);
 }

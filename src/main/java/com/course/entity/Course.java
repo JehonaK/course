@@ -38,6 +38,10 @@ public class Course extends BaseEntity<String>{
     private List<ForumPost> forumPosts;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
+    private List<Lesson> lessons;
+
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "course_student",
@@ -47,8 +51,13 @@ public class Course extends BaseEntity<String>{
     private List<User> students;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
-    private List<Lesson> lessons;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "course_class",
+            joinColumns = { @JoinColumn(name = "course_id") },
+            inverseJoinColumns = { @JoinColumn(name = "class_id") }
+    )
+    private List<CourseClass> courseClasses;
 
     public Course() {}
 
@@ -144,5 +153,13 @@ public class Course extends BaseEntity<String>{
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    public List<CourseClass> getCourseClasses() {
+        return courseClasses;
+    }
+
+    public void setCourseClasses(List<CourseClass> students) {
+        this.courseClasses = courseClasses;
     }
 }
