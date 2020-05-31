@@ -36,15 +36,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
 
     @Override
     public List<Course> getCoursesByStudentId(String studentId) {
-//        studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
-//        User student = userService.findById(studentId);
-//        return student.getCoursesEnrolled();
-        ArrayList<String> sl = new ArrayList<>();
-        sl.add("58fd62c1-0b58-456f-8c3b-21bdf5739d3");
-        sl.add("222");
-        SerializableTeacherSubjectConnection con = new SerializableTeacherSubjectConnection("MAth 1", "6619afe0-f0ef-4aa5-a1e4-a597e8174bbf", "1", sl);
-        handleNewTeacherSubjectConnection(con);
-        return null;
+        studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
+        User student = userService.findById(studentId);
+        return student.getCoursesEnrolled();
     }
 
     public List<Course> getCoursesByCourseClassId(String courseClassId){
