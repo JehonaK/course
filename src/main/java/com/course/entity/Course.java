@@ -46,6 +46,10 @@ public class Course extends BaseEntity<String>{
     )
     private List<User> students;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
+    private List<Lesson> lessons;
+
     public Course() {}
 
     public Course(String name, String description, User teacherId, String subjectId) {
@@ -132,5 +136,13 @@ public class Course extends BaseEntity<String>{
 
     public void setStudents(List<User> students) {
         this.students = students;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }
