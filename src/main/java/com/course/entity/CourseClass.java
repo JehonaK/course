@@ -12,7 +12,7 @@ public class CourseClass extends BaseEntity<String> {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "courseClasses", fetch = FetchType.LAZY)
     private List<Course> courses;
 
     public CourseClass() {
