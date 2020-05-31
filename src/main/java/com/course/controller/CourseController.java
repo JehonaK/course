@@ -45,6 +45,11 @@ public class CourseController {
         return courseService.getCoursesByStudentId(studentId);
     }
 
+    @GetMapping("course-class")
+    public List<Course> getCoursesByCourseClassId(@RequestParam String courseClassId) {
+        return courseService.getCoursesByCourseClassId(courseClassId);
+    }
+
     @PutMapping("{id}")
     public Map<String, String> update(@RequestBody Course course, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();

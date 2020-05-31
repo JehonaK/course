@@ -2,6 +2,7 @@ package com.course.service;
 
 import com.course.PerRequestIdStorage;
 import com.course.entity.Course;
+import com.course.entity.CourseClass;
 import com.course.entity.User;
 import com.course.integration.models.SerializableTeacherSubjectConnection;
 import com.course.repository.BaseRepository;
@@ -17,11 +18,13 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
 
     private CourseRepository courseRepository;
     private UserServiceImpl userService;
+    private CourseClassServiceImpl courseClassService;
 
-    public CourseServiceImpl(BaseRepository<Course, String> baseRepository, CourseRepository courseRepository, UserServiceImpl userService) {
+    public CourseServiceImpl(BaseRepository<Course, String> baseRepository, CourseRepository courseRepository, UserServiceImpl userService, CourseClassServiceImpl courseClassService) {
         super(baseRepository);
         this.courseRepository = courseRepository;
         this.userService = userService;
+        this.courseClassService = courseClassService;
     }
 
     @Override
@@ -36,6 +39,11 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
         studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
         User student = userService.findById(studentId);
         return student.getCoursesEnrolled();
+    }
+
+    public List<Course> getCoursesByCourseClassId(String courseClassId){
+        CourseClass courseClass = courseClassService.findById(courseClassId);
+        return courseClass.getCourses();
     }
 
     @Override

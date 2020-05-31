@@ -14,6 +14,10 @@ public class FileUpload extends BaseEntity<String> {
     @JoinColumn(name = "activity_id")
     private Activity activityId;
 
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lesson lessonId;
+
     @Column(name = "upload_time")
     private Timestamp uploadTime;
 
