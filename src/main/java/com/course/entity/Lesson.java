@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 public class Lesson extends BaseEntity<String> implements Comparable<Lesson> {
+
     @Column(name = "name")
     private String name;
 

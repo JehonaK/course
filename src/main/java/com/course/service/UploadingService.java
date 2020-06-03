@@ -36,8 +36,13 @@ public class UploadingService {
         return new FileDataContainer(downloader.getInputStream(), fileName);
     }
 
-    public void uploadFile(FileUpload fileUpload, InputStream fin, String originalFilename) throws IOException, DbxException {
-        String uploadPath = generatePathForActivityFile(fileUpload) + "/" + originalFilename;
+    public void uploadFile(FileUpload fileUpload, InputStream fin, String originalFilename, String role) throws IOException, DbxException {
+        String uploadPath = "";
+        if(role.equals("TEACHER")) {
+            uploadPath =  generatePathForTeacherActivityFile(fileUpload.getActivityId().getId()) + "/" + originalFilename;
+        } else {
+            uploadPath = generatePathForActivityFile(fileUpload) + "/" + originalFilename;
+        }
         dbxClient.files().uploadBuilder(uploadPath).uploadAndFinish(fin);
     }
 
@@ -50,6 +55,10 @@ public class UploadingService {
         return dbxClient.files().listFolder(path).getEntries().stream().map(Metadata::getName).collect(Collectors.toList());
     }
 
+    private String generatePathForTeacherActivityFile(String activityId) {
+        return "/activity/" + activityId + "/MAIN";
+    }
+
     private String generatePathForActivityFile(FileUpload fileUpload) {
         String activityId = fileUpload.getActivityId().getId();
         String fileUploadId = fileUpload.getId();
@@ -60,6 +69,13 @@ public class UploadingService {
         String lessonId = fileUpload.getLessonId().getId();
         String fileUploadId = fileUpload.getId();
         return "/lesson/" + lessonId + "/" + fileUploadId;
+    }
+
+    public FileDataContainer downloadMainFileByActivityId(String activityId) throws DbxException {
+        String downloadPath = generatePathForTeacherActivityFile(activityId);
+        String fileName = listFilesByPath(downloadPath).get(0);
+        DbxDownloader downloader  = dbxClient.files().download(downloadPath + "/" + fileName);
+        return new FileDataContainer(downloader.getInputStream(), fileName);
     }
 
 }

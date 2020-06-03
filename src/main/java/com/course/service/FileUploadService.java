@@ -21,4 +21,7 @@ public interface FileUploadService {
     FileUpload uploadAndSaveFile(MultipartFile multipartFile, String activityId) throws DbxException, IOException;
 
     FileUpload uploadAndSaveFileForLesson(MultipartFile multipartFile, String lessonId) throws DbxException, IOException;
+
+    ResponseEntity<Resource> downloadMainFileByActivityId(String activityId);
+
 }

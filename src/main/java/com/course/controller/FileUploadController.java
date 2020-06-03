@@ -37,6 +37,11 @@ public class FileUploadController {
         return fileUploadService.downloadFileByFileUploadId(fileUploadId);
     }
 
+    @GetMapping("/download/activity/{activityId}/main")
+    public ResponseEntity<Resource> downloadActivityTeacherFileByFileUploadId(@PathVariable String activityId) throws DbxException, IOException {
+        return fileUploadService.downloadMainFileByActivityId(activityId);
+    }
+
     @GetMapping("/download/lesson/{fileUploadId}")
     public ResponseEntity<Resource> downloadLessonFileByFileUploadId(@PathVariable String fileUploadId) throws DbxException, IOException {
         return fileUploadService.downloadLessonFileByFileUploadId(fileUploadId);

@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DbxConfiguration {
 
-    private static final String ACCESS_TOKEN = "xenlsSWs0YAAAAAAAAAAIwtJNWafBijGmvdKAV4QH144IJEuljBCLhMXJFfv1CHI";
+    private static final String ACCESS_TOKEN = "xenlsSWs0YAAAAAAAAAAJMmZaTVH9ro8j4s2PAcPZhfjawsDa9DIp8lpa_GTc954";
 
     @Bean
     public DbxRequestConfig requestConfig() {
-        return DbxRequestConfig.newBuilder("edu-platform").build();
+        return DbxRequestConfig.newBuilder("EMP-DEV").build();
     }
 
     @Bean

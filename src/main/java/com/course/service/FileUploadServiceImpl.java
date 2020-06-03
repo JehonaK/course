@@ -1,8 +1,10 @@
 package com.course.service;
 
+import com.course.PerRequestIdStorage;
 import com.course.entity.Activity;
 import com.course.entity.FileUpload;
 import com.course.entity.Lesson;
+import com.course.entity.User;
 import com.course.repository.BaseRepository;
 import com.course.repository.FileUploadRepository;
 import com.course.util.FileDataContainer;
@@ -27,24 +29,21 @@ public class FileUploadServiceImpl extends BaseServiceImpl<FileUpload, String> i
     private ActivityServiceImpl activityService;
     private UploadingService uploadingService;
     private LessonServiceImpl lessonService;
+    private UserServiceImpl userService;
 
     public FileUploadServiceImpl(BaseRepository<FileUpload, String> baseRepository, FileUploadRepository fileUploadRepository, ActivityServiceImpl activityService,
-                                 UploadingService uploadingService, LessonServiceImpl lessonService) {
+                                 UploadingService uploadingService, LessonServiceImpl lessonService, UserServiceImpl userService) {
         super(baseRepository);
         this.fileUploadRepository = fileUploadRepository;
         this.activityService = activityService;
         this.uploadingService = uploadingService;
         this.lessonService = lessonService;
+        this.userService = userService;
     }
 
     @Override
     public List<FileUpload> getFileUploadsByActivityId(String activityId) {
         Activity activity = activityService.findById(activityId);
-//        List<Evaluation> evaluations = activity.getEvaluations();
-//        List<FileUpload> uploads = new ArrayList<>();
-//        for(Evaluation evaluation : evaluations) {
-//            uploads.add(evaluation.getFileUpload());
-//        }
         return activity.getFileUploads();
     }
 
@@ -83,8 +82,11 @@ public class FileUploadServiceImpl extends BaseServiceImpl<FileUpload, String> i
     @Override
     public FileUpload uploadAndSaveFile(MultipartFile multipartFile, String activityId) throws DbxException, IOException {
         Activity activity = activityService.findById(activityId);
-        FileUpload savedFileUpload = fileUploadRepository.save(new FileUpload(activity, new Timestamp(System.currentTimeMillis())));
-        uploadingService.uploadFile(savedFileUpload, multipartFile.getInputStream(), multipartFile.getOriginalFilename());
+        User uploadedBy = userService.findById(PerRequestIdStorage.getUserId());
+        FileUpload fileUpload = new FileUpload(activity, new Timestamp(System.currentTimeMillis()));
+        fileUpload.setUploadedBy(uploadedBy);
+        FileUpload savedFileUpload = fileUploadRepository.save(fileUpload);
+        uploadingService.uploadFile(savedFileUpload, multipartFile.getInputStream(), multipartFile.getOriginalFilename(), uploadedBy.getRole());
         return savedFileUpload;
     }
 
@@ -96,4 +98,20 @@ public class FileUploadServiceImpl extends BaseServiceImpl<FileUpload, String> i
         return savedFileUpload;
     }
 
+    @Override
+    public ResponseEntity<Resource> downloadMainFileByActivityId(String activityId) {
+        FileDataContainer fileDataContainer = null;
+        try {
+            fileDataContainer = uploadingService.downloadMainFileByActivityId(activityId);
+        } catch (DbxException ex) {
+            ex.printStackTrace();
+        }
+        InputStreamResource resource = new InputStreamResource(fileDataContainer.getInputStream());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=" + fileDataContainer.getFileName());
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
+    }
 }
