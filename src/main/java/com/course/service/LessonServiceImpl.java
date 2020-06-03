@@ -7,6 +7,7 @@ import com.course.repository.BaseRepository;
 import com.course.repository.LessonRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,6 +23,8 @@ public class LessonServiceImpl extends BaseServiceImpl<Lesson, String> implement
 
     public List<Lesson> getLessonsByCourseId(String courseId){
         Course course = courseService.findById(courseId);
-        return course.getLessons();
+        List<Lesson> lessons = course.getLessons();
+        Collections.sort(lessons);
+        return lessons;
     }
 }

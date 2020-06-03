@@ -32,20 +32,35 @@ public class FileUploadController {
         return fileUploadService.findById(fileUploadId);
     }
 
-    @GetMapping("/download/{fileUploadId}")
-    public ResponseEntity<Resource> downloadFileByFileUploadId(@PathVariable String fileUploadId) throws DbxException, IOException {
+    @GetMapping("/download/activity/{fileUploadId}")
+    public ResponseEntity<Resource> downloadActivityFileByFileUploadId(@PathVariable String fileUploadId) throws DbxException, IOException {
         return fileUploadService.downloadFileByFileUploadId(fileUploadId);
     }
 
-    @GetMapping()
+    @GetMapping("/download/lesson/{fileUploadId}")
+    public ResponseEntity<Resource> downloadLessonFileByFileUploadId(@PathVariable String fileUploadId) throws DbxException, IOException {
+        return fileUploadService.downloadLessonFileByFileUploadId(fileUploadId);
+    }
+
+    @GetMapping("activity")
     public List<FileUpload> getFileUploadsByActivityId(@RequestParam("activityId") String activityId) {
         return fileUploadService.getFileUploadsByActivityId(activityId);
     }
 
-    @PostMapping
-    public FileUpload create(@RequestParam("file") MultipartFile multipartFile, @RequestParam("activityId") String activityId) {
+    @GetMapping("lesson")
+    public List<FileUpload> getFileUploadsByLessonId(@RequestParam("activityId") String activityId) {
+        return fileUploadService.getFileUploadsByLessonId(activityId);
+    }
+
+    @PostMapping("activity")
+    public FileUpload createForActivity(@RequestParam("file") MultipartFile multipartFile, @RequestParam("activityId") String activityId) throws IOException, DbxException {
+        return fileUploadService.uploadAndSaveFile(multipartFile, activityId);
+    }
+
+    @PostMapping("lesson")
+    public FileUpload createForLesson(@RequestParam("file") MultipartFile multipartFile, @RequestParam("lessonId") String lessonId) {
         try {
-            return fileUploadService.uploadAndSaveFile(multipartFile, activityId);
+            return fileUploadService.uploadAndSaveFileForLesson(multipartFile, lessonId);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

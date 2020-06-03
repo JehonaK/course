@@ -57,8 +57,9 @@ public class LessonController {
         }
     }
 
-    @GetMapping("course")
-    public List<Lesson> getLessonsByCourseId(@RequestParam String courseId) {
+    @GetMapping("course/{courseId}")
+    public List<Lesson> getLessonsByCourseId(@PathVariable String courseId) {
         return lessonService.getLessonsByCourseId(courseId);
     }
+
 }

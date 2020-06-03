@@ -3,10 +3,11 @@ package com.course.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-public class Lesson extends BaseEntity<String>{
+public class Lesson extends BaseEntity<String> implements Comparable<Lesson> {
     @Column(name = "name")
     private String name;
 
@@ -23,11 +24,11 @@ public class Lesson extends BaseEntity<String>{
 
     public Lesson () { }
 
-    public Lesson(String id, String name, String description, Course courseId){
-        super(id);
+    public Lesson(String name, String description, Course courseId, List<FileUpload> fileUploads) {
         this.name = name;
         this.description = description;
-//        this.courseId = courseId;
+        this.courseId = courseId;
+        this.fileUploads = fileUploads;
     }
 
     public String getName() {
@@ -46,19 +47,25 @@ public class Lesson extends BaseEntity<String>{
         this.description = description;
     }
 
-//    public Course getCourseId() {
-//        return courseId;
-//    }
-//
-//    public void setCourseId(Course courseId) {
-//        this.courseId = courseId;
-//    }
-//
-//    public List<FileUpload> getFileUploads() {
-//        return fileUploads;
-//    }
-//
-//    public void setFileUploads(List<FileUpload> fileUploads) {
-//        this.fileUploads = fileUploads;
-//    }
+    public Course getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Course courseId) {
+        this.courseId = courseId;
+    }
+
+    public List<FileUpload> getFileUploads() {
+        return fileUploads;
+    }
+
+    public void setFileUploads(List<FileUpload> fileUploads) {
+        this.fileUploads = fileUploads;
+    }
+
+    @Override
+    public int compareTo(Lesson o) {
+        return getCreateDateTime().compareTo(o.getCreateDateTime());
+    }
+
 }

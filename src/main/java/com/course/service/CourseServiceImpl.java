@@ -54,4 +54,5 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
         course.setStudents(students);
         save(course);
     }
+
 }

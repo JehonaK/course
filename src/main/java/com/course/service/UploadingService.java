@@ -29,8 +29,20 @@ public class UploadingService {
         return new FileDataContainer(downloader.getInputStream(), fileName);
     }
 
+    public FileDataContainer downloadLessonFile(FileUpload fileUpload) throws DbxException {
+        String downloadPath = generatePathForLessonFile(fileUpload);
+        String fileName = listFilesByPath(downloadPath).get(0);
+        DbxDownloader downloader  = dbxClient.files().download(downloadPath + "/" + fileName);
+        return new FileDataContainer(downloader.getInputStream(), fileName);
+    }
+
     public void uploadFile(FileUpload fileUpload, InputStream fin, String originalFilename) throws IOException, DbxException {
         String uploadPath = generatePathForActivityFile(fileUpload) + "/" + originalFilename;
+        dbxClient.files().uploadBuilder(uploadPath).uploadAndFinish(fin);
+    }
+
+    public void uploadFileForLesson(FileUpload fileUpload, InputStream fin, String originalFilename) throws IOException, DbxException {
+        String uploadPath = generatePathForLessonFile(fileUpload) + "/" + originalFilename;
         dbxClient.files().uploadBuilder(uploadPath).uploadAndFinish(fin);
     }
 
@@ -42,6 +54,12 @@ public class UploadingService {
         String activityId = fileUpload.getActivityId().getId();
         String fileUploadId = fileUpload.getId();
         return "/activity/" + activityId + "/" + fileUploadId;
+    }
+
+    private String generatePathForLessonFile(FileUpload fileUpload) {
+        String lessonId = fileUpload.getLessonId().getId();
+        String fileUploadId = fileUpload.getId();
+        return "/lesson/" + lessonId + "/" + fileUploadId;
     }
 
 }

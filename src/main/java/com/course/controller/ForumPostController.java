@@ -29,9 +29,14 @@ public class ForumPostController {
         }
     }
 
+//    @GetMapping
+//    public List<ForumPost> getForumPostsByStudentId(@RequestParam(required = false) String studentId) {
+//        return forumPostService.getForumPostsByStudentId(studentId);
+//    }
+
     @GetMapping
-    public List<ForumPost> getForumPostsByStudentId(@RequestParam(required = false) String studentId) {
-        return forumPostService.getForumPostsByStudentId(studentId);
+    public List<ForumPost> getForumPostByCourseId(@RequestParam("courseId") String courseId) {
+        return forumPostService.getForumPostByCourseId(courseId);
     }
 
     @PutMapping("{id}")
