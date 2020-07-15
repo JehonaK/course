@@ -18,6 +18,11 @@ public class CourseClass extends BaseEntity<String> {
     public CourseClass() {
     }
 
+    public CourseClass(String id, String name) {
+        super(id);
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

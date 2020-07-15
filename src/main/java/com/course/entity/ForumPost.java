@@ -79,4 +79,12 @@ public class ForumPost extends BaseEntity<String>{
         this.comments = comments;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof ForumPost) {
+            return this.getId().equals(((ForumPost)object).getId());
+        }
+        return false;
+    }
+
 }

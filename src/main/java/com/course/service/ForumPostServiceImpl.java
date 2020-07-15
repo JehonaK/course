@@ -54,7 +54,7 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
         Course course = courseService.findById(courseId);
         List<ForumPost> forumPosts = course.getForumPosts();
         forumPosts.forEach(forumPost -> {
-            Collections.sort(forumPost.getComments());
+            if(forumPost.getComments() != null) Collections.sort(forumPost.getComments());
         });
         return forumPosts;
     }
