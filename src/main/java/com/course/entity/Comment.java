@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "comment")
-public class Comment extends BaseEntity<String> {
+public class Comment extends BaseEntity<String> implements Comparable<Comment> {
 
     @Column(name = "content")
     private String content;
@@ -54,6 +54,11 @@ public class Comment extends BaseEntity<String> {
 
     public void setAuthorId(User authorId) {
         this.authorId = authorId;
+    }
+
+    @Override
+    public int compareTo(Comment o) {
+        return this.getCreateDateTime().compareTo(o.getCreateDateTime());
     }
 
 }

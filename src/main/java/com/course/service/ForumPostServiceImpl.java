@@ -4,15 +4,14 @@ import com.course.PerRequestIdStorage;
 import com.course.entity.Course;
 import com.course.entity.ForumPost;
 import com.course.entity.User;
-import com.course.integration.models.SerializableNotification;
 import com.course.integration.producers.NotificationProducer;
 import com.course.repository.BaseRepository;
 import com.course.repository.ForumPostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> implements ForumPostService {
@@ -35,8 +34,6 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
     public ForumPost save(ForumPost forumPost) {
         User author = userService.findById(PerRequestIdStorage.getUserId());
         if(forumPost.getAuthorId() == null) forumPost.setAuthorId(author);
-//        notificationProducer.sendNotification(new SerializableNotification("New post in forum: " + forumPost.getTitle(),
-//                (ArrayList<String>) forumPost.getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toList())));
         return forumPostRepository.save(forumPost);
     }
 
@@ -55,6 +52,11 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
     @Override
     public List<ForumPost> getForumPostByCourseId(String courseId) {
         Course course = courseService.findById(courseId);
-        return course.getForumPosts();
+        List<ForumPost> forumPosts = course.getForumPosts();
+        forumPosts.forEach(forumPost -> {
+            if(forumPost.getComments() != null) Collections.sort(forumPost.getComments());
+        });
+        return forumPosts;
     }
+
 }

@@ -38,6 +38,10 @@ public class User extends BaseEntity<String> {
     @OneToMany(mappedBy = "studentId", fetch = FetchType.LAZY)
     private List<Evaluation> evaluations;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "uploadedBy", fetch = FetchType.LAZY)
+    private List<FileUpload> fileUploads;
+
     public User() {}
 
     public User(String id, String firstName, String lastName, String email, String role) {
@@ -110,6 +114,14 @@ public class User extends BaseEntity<String> {
 
     public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
+    }
+
+    public List<FileUpload> getFileUploads() {
+        return fileUploads;
+    }
+
+    public void setFileUploads(List<FileUpload> fileUploads) {
+        this.fileUploads = fileUploads;
     }
 
 }

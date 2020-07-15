@@ -162,4 +162,13 @@ public class Course extends BaseEntity<String>{
     public void setCourseClasses(List<CourseClass> students) {
         this.courseClasses = courseClasses;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof Course) {
+            return this.getId().equals(((Course)object).getId());
+        }
+        return false;
+    }
+
 }

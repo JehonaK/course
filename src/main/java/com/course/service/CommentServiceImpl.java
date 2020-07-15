@@ -2,6 +2,7 @@ package com.course.service;
 
 import com.course.PerRequestIdStorage;
 import com.course.entity.Comment;
+import com.course.entity.ForumPost;
 import com.course.entity.User;
 import com.course.integration.models.SerializableNotification;
 import com.course.integration.producers.NotificationProducer;
@@ -18,19 +19,23 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, String> impleme
     private CommentRepository commentRepository;
     private UserServiceImpl userService;
     private NotificationProducer notificationProducer;
+    private ForumPostServiceImpl forumPostService;
 
     public CommentServiceImpl(BaseRepository<Comment, String> baseRepository, CommentRepository commentRepository, UserServiceImpl userService,
-                              NotificationProducer notificationProducer) {
+                              NotificationProducer notificationProducer, ForumPostServiceImpl forumPostService) {
         super(baseRepository);
         this.commentRepository = commentRepository;
         this.userService = userService;
         this.notificationProducer = notificationProducer;
+        this.forumPostService = forumPostService;
     }
 
     @Override
-    public Comment save(Comment comment) {
+    public Comment saveByForumPostId(Comment comment, String forumPostId) {
         User author = userService.findById(PerRequestIdStorage.getUserId());
+        ForumPost forumPost = forumPostService.findById(forumPostId);
         comment.setAuthorId(author);
+        comment.setPostId(forumPost);
 //        notificationProducer.sendNotification(new SerializableNotification("Comment \"" + comment.getContent() + "\" in forum post with title \""
 //                + comment.getPostId().getTitle() + "\"", comment.getPostId().getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toCollection(ArrayList::new))));
         return commentRepository.save(comment);

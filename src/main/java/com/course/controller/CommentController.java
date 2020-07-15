@@ -21,9 +21,9 @@ public class CommentController {
     }
 
     @PostMapping
-    public Comment create(@RequestBody Comment comment){
+    public Comment create(@RequestBody Comment comment, @RequestParam("postId") String postId){
         try {
-            return commentService.save(comment);
+            return commentService.saveByForumPostId(comment, postId);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

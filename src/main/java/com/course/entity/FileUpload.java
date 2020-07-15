@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,6 +22,13 @@ public class FileUpload extends BaseEntity<String> {
     @Column(name = "upload_time")
     private Timestamp uploadTime;
 
+    @Column(name = "original_name")
+    private String originalName;
+
+    @ManyToOne
+    @JoinColumn(name = "uploaded_by")
+    private User uploadedBy;
+
     public FileUpload() {}
 
     public FileUpload(Activity activityId, Timestamp uploadTime) {
@@ -28,10 +36,10 @@ public class FileUpload extends BaseEntity<String> {
         this.uploadTime = uploadTime;
     }
 
-    public FileUpload(String id, Activity activityId, Timestamp uploadTime) {
-        super(id);
-        this.activityId = activityId;
+    public FileUpload(Lesson lessonId, Timestamp uploadTime, String originalName) {
+        this.lessonId = lessonId;
         this.uploadTime = uploadTime;
+        this.originalName = originalName;
     }
 
     public Timestamp getUploadTime() {
@@ -50,8 +58,28 @@ public class FileUpload extends BaseEntity<String> {
         this.activityId = activityId;
     }
 
-    @Override
-    public String toString() {
-        return "FileUpload{}";
+    public Lesson getLessonId() {
+        return lessonId;
     }
+
+    public void setLessonId(Lesson lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
+
+    public User getUploadedBy() {
+        return uploadedBy;
+    }
+
+    public void setUploadedBy(User uploadedBy) {
+        this.uploadedBy = uploadedBy;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -76,6 +77,14 @@ public class ForumPost extends BaseEntity<String>{
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof ForumPost) {
+            return this.getId().equals(((ForumPost)object).getId());
+        }
+        return false;
     }
 
 }
