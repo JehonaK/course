@@ -43,7 +43,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## Authors
 - Ilir Asllani
 - Jehona Konushefci
-- Mishel Canameri
+- Lumbardh Elshani
 - Rinor Hajrizi
 - Vedat Apuk
 ## Acknowledgements
