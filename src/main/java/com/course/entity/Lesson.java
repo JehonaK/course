@@ -32,6 +32,13 @@ public class Lesson extends BaseEntity<String> implements Comparable<Lesson> {
         this.fileUploads = fileUploads;
     }
 
+    public Lesson(String id, Timestamp createDateTime, String name, String description, Course courseId){
+        super(id, createDateTime);
+        this.name = name;
+        this.description = description;
+        this.courseId = courseId;
+    }
+
     public String getName() {
         return name;
     }
