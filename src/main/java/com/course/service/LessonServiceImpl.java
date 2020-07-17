@@ -2,7 +2,6 @@ package com.course.service;
 
 import com.course.entity.Course;
 import com.course.entity.Lesson;
-import com.course.entity.User;
 import com.course.repository.BaseRepository;
 import com.course.repository.LessonRepository;
 import org.springframework.stereotype.Service;

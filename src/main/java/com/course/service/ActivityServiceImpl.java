@@ -6,6 +6,7 @@ import com.course.repository.ActivityRepository;
 import com.course.repository.BaseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,7 +24,10 @@ public class ActivityServiceImpl extends BaseServiceImpl<Activity, String> imple
     @Override
     public List<Activity> getActivitiesByCourseId(String courseId) {
         Course course = courseService.findById(courseId);
-        return activityRepository.findByCourseId(course);
+
+        List<Activity> activities = course.getActivities();
+        Collections.sort(activities);
+        return activities;
     }
 
     @Override

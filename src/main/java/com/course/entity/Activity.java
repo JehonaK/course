@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "activity")
-public class Activity extends BaseEntity<String>{
+public class Activity extends BaseEntity<String> implements Comparable<Activity>{
 
     @Column(name = "name")
     private String name;
@@ -129,4 +129,9 @@ public class Activity extends BaseEntity<String>{
         this.fileUploads = fileUploads;
     }
 
+
+    @Override
+    public int compareTo(Activity activity) {
+        return getCreateDateTime().compareTo(activity.getCreateDateTime());
+    }
 }
