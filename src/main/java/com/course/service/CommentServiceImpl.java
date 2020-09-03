@@ -33,7 +33,13 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, String> impleme
     @Override
     public Comment saveByForumPostId(Comment comment, String forumPostId) {
         User author = userService.findById(PerRequestIdStorage.getUserId());
+        if (author == null) {
+            throw new RuntimeException("Author not found!");
+        }
         ForumPost forumPost = forumPostService.findById(forumPostId);
+        if (forumPost == null) {
+            throw new RuntimeException("Forum Post not found!");
+        }
         comment.setAuthorId(author);
         comment.setPostId(forumPost);
 //        notificationProducer.sendNotification(new SerializableNotification("Comment \"" + comment.getContent() + "\" in forum post with title \""

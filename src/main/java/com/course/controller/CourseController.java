@@ -2,14 +2,13 @@ package com.course.controller;
 
 import com.course.entity.Course;
 import com.course.exception.ResponseException;
+import com.course.integration.models.SerializableTeacherSubjectConnection;
 import com.course.service.CourseServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("course")
@@ -61,6 +60,16 @@ public class CourseController {
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping
+    public void testCreateCourse() {
+        ArrayList<String> studentIds = new ArrayList<>();
+        studentIds.add("6619afe0-f0ef-4aa5-a1e4-a597e8174bbf");
+        SerializableTeacherSubjectConnection connection = new SerializableTeacherSubjectConnection(
+                "Math - Level 1", "ed62d8d5-20a9-4112-8c4d-d8769f7384d2", "subid", studentIds
+        );
+        courseService.handleNewTeacherSubjectConnection(connection);
     }
 
 }

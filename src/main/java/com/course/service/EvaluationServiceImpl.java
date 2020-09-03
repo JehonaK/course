@@ -31,6 +31,9 @@ public class EvaluationServiceImpl extends BaseServiceImpl<Evaluation, String> i
     public List<Evaluation> getEvaluationsByStudentIdAndCourseId(String studentId, final String courseId) {
         studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
         User student = userService.findById(studentId);
+        if (student == null) {
+            throw new RuntimeException("User not found!");
+        }
         List<Evaluation> evaluations = student.getEvaluations();
         return evaluations.stream().filter(e -> e.getActivityId().getCourseId().getId().equals(courseId)).collect(Collectors.toList());
 //        List<Activity> activities = activityService.getActivitiesByCourseId(courseId);

@@ -31,6 +31,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
     public List<Course> getCoursesByTeacherId(String teacherId) {
         teacherId = teacherId == null ? PerRequestIdStorage.getUserId() : teacherId;
         User teacher = userService.findById(teacherId);
+        if (teacher == null) {
+            throw new RuntimeException("Teacher not found!");
+        }
         return teacher.getCoursesTeaching();
     }
 
@@ -38,6 +41,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
     public List<Course> getCoursesByStudentId(String studentId) {
         studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
         User student = userService.findById(studentId);
+        if (student == null) {
+            throw new RuntimeException("Student not found!");
+        }
         return student.getCoursesEnrolled();
     }
 
@@ -49,7 +55,17 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, String> implement
     @Override
     public void handleNewTeacherSubjectConnection(SerializableTeacherSubjectConnection connection) {
         User teacher = userService.findById(connection.getTeacherId());
-        List<User> students = userService.findBatchOfUsersByIdList(connection.getStudentsId());
+        if (teacher == null) {
+            throw new RuntimeException("Teacher not found!");
+        }
+        List<User> students = new ArrayList<>();
+        for (String studentId : connection.getStudentsId()) {
+            User student = userService.findById(studentId);
+            if (student == null) {
+                throw new RuntimeException("Student not found!");
+            }
+            students.add(student);
+        }
         Course course = new Course(connection.getCourseName(), "No description", teacher, connection.getSubjectId());
         course.setStudents(students);
         save(course);

@@ -32,8 +32,13 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
 
     @Override
     public ForumPost save(ForumPost forumPost) {
-        User author = userService.findById(PerRequestIdStorage.getUserId());
-        if(forumPost.getAuthorId() == null) forumPost.setAuthorId(author);
+        if(forumPost.getAuthorId() == null) {
+            User author = userService.findById(PerRequestIdStorage.getUserId());
+            if (author == null) {
+                throw new RuntimeException("User not found!");
+            }
+            forumPost.setAuthorId(author);
+        }
         return forumPostRepository.save(forumPost);
     }
 

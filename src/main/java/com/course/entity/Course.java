@@ -18,12 +18,12 @@ public class Course extends BaseEntity<String>{
     @Column(name = "description")
     private String description;
 
+    @Column(name = "subject_id")
+    private String subjectId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private User teacherId;
-
-    @Column(name = "subject_id")
-    private String subjectId;
 
     @JsonIgnore
     @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
