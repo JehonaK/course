@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>course</artifactId>
+	<artifactId>courseEntity</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>course</name>
+	<name>courseEntity</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -102,6 +102,43 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!--    REST 2 ts    -->
+		<dependency>
+			<groupId>com.blue-veery</groupId>
+			<artifactId>spring-rest2ts-generator</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blue-veery</groupId>
+			<artifactId>spring-rest2ts-spring</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blue-veery</groupId>
+			<artifactId>spring-rest2ts-spring-data</artifactId>
+			<version>1.2.5</version>
+			<!-- only if spring data is used-->
+		</dependency>
+		<dependency>
+			<groupId>com.blue-veery</groupId>
+			<artifactId>spring-rest2ts-jackson</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blue-veery</groupId>
+			<artifactId>spring-rest2ts-jax-rs</artifactId>
+			<version>1.2.5</version>
+			<!-- only if JAX-RS is used-->
+		</dependency>
+		<dependency>
+			<groupId>com.blue-veery</groupId>
+			<artifactId>spring-rest2ts-angular2json-impl</artifactId>
+			<version>1.2.5</version>
+			<!-- only if angular2json is used-->
+		</dependency>
+		<!--    REST 2 ts    -->
+
 	</dependencies>
 
 	<dependencyManagement>

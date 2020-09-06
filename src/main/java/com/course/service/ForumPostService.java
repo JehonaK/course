@@ -1,11 +1,11 @@
 package com.course.service;
 
-import com.course.entity.ForumPost;
+import com.course.entity.ForumPostEntity;
 
 import java.util.List;
 
 public interface ForumPostService {
-    List<ForumPost> getForumPostByCourseId(String courseId);
+    List<ForumPostEntity> getForumPostByCourseId(String courseId);
 
-    List<ForumPost> getForumPostsByStudentId(String studentId);
+    List<ForumPostEntity> getForumPostsByStudentId(String studentId);
 }

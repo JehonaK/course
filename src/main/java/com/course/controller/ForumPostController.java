@@ -1,6 +1,6 @@
 package com.course.controller;
 
-import com.course.entity.ForumPost;
+import com.course.entity.ForumPostEntity;
 import com.course.exception.ResponseException;
 import com.course.service.ForumPostServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("forum-post")
-public class ForumPostController {
+public class ForumPostController extends BaseController {
 
     private ForumPostServiceImpl forumPostService;
 
@@ -22,29 +22,29 @@ public class ForumPostController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ForumPost create(@RequestBody ForumPost forumPost){
+    public ForumPostEntity create(@RequestBody ForumPostEntity forumPostEntity){
         try {
-            return forumPostService.save(forumPost);
+            return forumPostService.save(forumPostEntity);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
 //    @GetMapping
-//    public List<ForumPost> getForumPostsByStudentId(@RequestParam(required = false) String studentId) {
+//    public List<ForumPostEntity> getForumPostsByStudentId(@RequestParam(required = false) String studentId) {
 //        return forumPostService.getForumPostsByStudentId(studentId);
 //    }
 
     @GetMapping
-    public List<ForumPost> getForumPostByCourseId(@RequestParam("courseId") String courseId) {
+    public List<ForumPostEntity> getForumPostByCourseId(@RequestParam("courseId") String courseId) {
         return forumPostService.getForumPostByCourseId(courseId);
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody ForumPost forumPost, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody ForumPostEntity forumPostEntity, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
-            forumPostService.update(forumPost, id);
+            forumPostService.update(forumPostEntity, id);
             responseMap.put("id", id);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -53,7 +53,7 @@ public class ForumPostController {
     }
 
     @GetMapping("{forumPostId}")
-    public ForumPost getById(@PathVariable String forumPostId) {
+    public ForumPostEntity getById(@PathVariable String forumPostId) {
         return forumPostService.findById(forumPostId);
     }
 

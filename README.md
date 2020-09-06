@@ -1,5 +1,5 @@
 # Course Management
-Course Management is an isolated microservice that is a part of the Education Management System. Its role is to manage courses, lesson, activities, forum posts, comments and evaluations inside a school.
+Course Management is an isolated microservice that is a part of the Education Management System. Its role is to manage cours, lessonEntity, activities, forum posts, commentEntities and evaluationEntities inside a school.
 ## Getting Started
 1. On GitHub, navigate to the main page of the repository.
 2. Under the repository name, click Clone or download.
@@ -8,16 +8,16 @@ Course Management is an isolated microservice that is a part of the Education Ma
 5. Change the current working directory to the location where you want the cloned directory.
 6. Type ```git clone ```, and then paste the URL you copied earlier.
 ```bash
-$ git clone https://github.com/JehonaK/course.git
+$ git clone https://github.com/JehonaK/courseEntity.git
 ```
 7. Press Enter to create your local clone.
 ### Prerequisites
 - JDK 1.8 or later
 - Maven 3 or later
 - MySQL 8.0
-Have a database named *course* created:
+Have a database named *courseEntity* created:
 ```python
-create database course;
+create database courseEntity;
 ```
 **Note:** the database should be created under the user *root* with no password. If you want to change these default settings change them in *application.properties* file:
 ```python

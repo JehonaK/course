@@ -1,10 +1,7 @@
 package com.course.controller;
 
-import com.course.entity.Course;
-import com.course.entity.ForumPost;
-import com.course.entity.Lesson;
+import com.course.entity.LessonEntity;
 import com.course.exception.ResponseException;
-import com.course.service.ForumPostServiceImpl;
 import com.course.service.LessonServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("lesson")
-public class LessonController {
+public class LessonController extends BaseController {
     private LessonServiceImpl lessonService;
 
     public LessonController(LessonServiceImpl lessonService) {
@@ -23,19 +20,19 @@ public class LessonController {
     }
 
     @PostMapping
-    public Lesson create(@RequestBody Lesson lesson){
+    public LessonEntity create(@RequestBody LessonEntity lessonEntity){
         try {
-            return lessonService.save(lesson);
+            return lessonService.save(lessonEntity);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody Lesson lesson, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody LessonEntity lessonEntity, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
-            lessonService.update(lesson, id);
+            lessonService.update(lessonEntity, id);
             responseMap.put("id", id);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -44,7 +41,7 @@ public class LessonController {
     }
 
     @GetMapping("{lessonId}")
-    public Lesson getById(@PathVariable String lessonId) {
+    public LessonEntity getById(@PathVariable String lessonId) {
         return lessonService.findById(lessonId);
     }
 
@@ -58,7 +55,7 @@ public class LessonController {
     }
 
     @GetMapping("course/{courseId}")
-    public List<Lesson> getLessonsByCourseId(@PathVariable String courseId) {
+    public List<LessonEntity> getLessonsByCourseId(@PathVariable String courseId) {
         return lessonService.getLessonsByCourseId(courseId);
     }
 

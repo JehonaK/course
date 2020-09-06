@@ -1,9 +1,9 @@
 package com.course.service;
 
-import com.course.entity.Activity;
+import com.course.entity.ActivityEntity;
 
 import java.util.List;
 
 public interface ActivityService {
-    List<Activity> getActivitiesByCourseId(String courseId);
+    List<ActivityEntity> getActivitiesByCourseId(String courseId);
 }

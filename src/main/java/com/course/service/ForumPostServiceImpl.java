@@ -1,9 +1,9 @@
 package com.course.service;
 
 import com.course.PerRequestIdStorage;
-import com.course.entity.Course;
-import com.course.entity.ForumPost;
-import com.course.entity.User;
+import com.course.entity.CourseEntity;
+import com.course.entity.ForumPostEntity;
+import com.course.entity.UserEntity;
 import com.course.integration.producers.NotificationProducer;
 import com.course.repository.BaseRepository;
 import com.course.repository.ForumPostRepository;
@@ -14,14 +14,14 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> implements ForumPostService {
+public class ForumPostServiceImpl extends BaseServiceImpl<ForumPostEntity, String> implements ForumPostService {
 
     private ForumPostRepository forumPostRepository;
     private CourseServiceImpl courseService;
     private UserServiceImpl userService;
     private NotificationProducer notificationProducer;
 
-    public ForumPostServiceImpl(BaseRepository<ForumPost, String> baseRepository, ForumPostRepository forumPostRepository, CourseServiceImpl courseService,
+    public ForumPostServiceImpl(BaseRepository<ForumPostEntity, String> baseRepository, ForumPostRepository forumPostRepository, CourseServiceImpl courseService,
                                 UserServiceImpl userService, NotificationProducer notificationProducer) {
         super(baseRepository);
         this.forumPostRepository = forumPostRepository;
@@ -31,37 +31,37 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
     }
 
     @Override
-    public ForumPost save(ForumPost forumPost) {
-        if(forumPost.getAuthorId() == null) {
-            User author = userService.findById(PerRequestIdStorage.getUserId());
+    public ForumPostEntity save(ForumPostEntity forumPostEntity) {
+        if(forumPostEntity.getAuthorId() == null) {
+            UserEntity author = userService.findById(PerRequestIdStorage.getUserId());
             if (author == null) {
-                throw new RuntimeException("User not found!");
+                throw new RuntimeException("UserEntity not found!");
             }
-            forumPost.setAuthorId(author);
+            forumPostEntity.setAuthorId(author);
         }
-        return forumPostRepository.save(forumPost);
+        return forumPostRepository.save(forumPostEntity);
     }
 
     @Override
-    public List<ForumPost> getForumPostsByStudentId(String studentId) {
+    public List<ForumPostEntity> getForumPostsByStudentId(String studentId) {
         studentId = studentId == null ? PerRequestIdStorage.getUserId() : studentId;
-        User student = userService.findById(studentId);
-        List<Course> courses = student.getCoursesEnrolled();
-        List<ForumPost> forumPosts = new ArrayList<>();
-        for(Course course : courses) {
-            forumPosts.addAll(course.getForumPosts());
+        UserEntity student = userService.findById(studentId);
+        List<CourseEntity> cours = student.getCoursesEnrolled();
+        List<ForumPostEntity> forumPostEntities = new ArrayList<>();
+        for(CourseEntity courseEntity : cours) {
+            forumPostEntities.addAll(courseEntity.getForumPostEntities());
         }
-        return forumPosts;
+        return forumPostEntities;
     }
 
     @Override
-    public List<ForumPost> getForumPostByCourseId(String courseId) {
-        Course course = courseService.findById(courseId);
-        List<ForumPost> forumPosts = course.getForumPosts();
-        forumPosts.forEach(forumPost -> {
-            if(forumPost.getComments() != null) Collections.sort(forumPost.getComments());
+    public List<ForumPostEntity> getForumPostByCourseId(String courseId) {
+        CourseEntity courseEntity = courseService.findById(courseId);
+        List<ForumPostEntity> forumPostEntities = courseEntity.getForumPostEntities();
+        forumPostEntities.forEach(forumPost -> {
+            if(forumPost.getCommentEntities() != null) Collections.sort(forumPost.getCommentEntities());
         });
-        return forumPosts;
+        return forumPostEntities;
     }
 
 }

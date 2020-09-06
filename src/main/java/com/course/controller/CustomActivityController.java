@@ -1,10 +1,7 @@
 package com.course.controller;
 
-import com.course.entity.Course;
-import com.course.entity.CustomActivity;
+import com.course.entity.CustomActivityEntity;
 import com.course.exception.ResponseException;
-import com.course.service.CourseServiceImpl;
-import com.course.service.CustomActivityService;
 import com.course.service.CustomActivityServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("custom-activity")
-public class CustomActivityController {
+public class CustomActivityController extends BaseController {
 
     private CustomActivityServiceImpl customActivityService;
 
@@ -25,19 +22,19 @@ public class CustomActivityController {
     }
 
     @PostMapping
-    public CustomActivity create(@RequestBody CustomActivity customActivity){
+    public CustomActivityEntity create(@RequestBody CustomActivityEntity customActivityEntity){
         try {
-            return customActivityService.save(customActivity);
+            return customActivityService.save(customActivityEntity);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody CustomActivity customActivity, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody CustomActivityEntity customActivityEntity, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
-            customActivityService.update(customActivity, id);
+            customActivityService.update(customActivityEntity, id);
             responseMap.put("id", id);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -46,12 +43,12 @@ public class CustomActivityController {
     }
 
     @GetMapping("{customActivityId}")
-    public CustomActivity getById(@PathVariable String customActivityId) {
+    public CustomActivityEntity getById(@PathVariable String customActivityId) {
         return customActivityService.findById(customActivityId);
     }
 
     @GetMapping
-    public List<CustomActivity> getByCourseId(@RequestParam String courseId) {
+    public List<CustomActivityEntity> getByCourseId(@RequestParam String courseId) {
         return customActivityService.getCustomActivityByCourseId(courseId);
     }
 

@@ -1,6 +1,6 @@
 package com.course.service;
 
-import com.course.entity.FileUpload;
+import com.course.entity.FileUploadEntity;
 import com.course.util.FileDataContainer;
 import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxException;
@@ -22,32 +22,32 @@ public class UploadingService {
         this.dbxClient = dbxClient;
     }
 
-    public FileDataContainer downloadFile(FileUpload fileUpload) throws DbxException {
-        String downloadPath = generatePathForActivityFile(fileUpload);
+    public FileDataContainer downloadFile(FileUploadEntity fileUploadEntity) throws DbxException {
+        String downloadPath = generatePathForActivityFile(fileUploadEntity);
         String fileName = listFilesByPath(downloadPath).get(0);
         DbxDownloader downloader  = dbxClient.files().download(downloadPath + "/" + fileName);
         return new FileDataContainer(downloader.getInputStream(), fileName);
     }
 
-    public FileDataContainer downloadLessonFile(FileUpload fileUpload) throws DbxException {
-        String downloadPath = generatePathForLessonFile(fileUpload);
+    public FileDataContainer downloadLessonFile(FileUploadEntity fileUploadEntity) throws DbxException {
+        String downloadPath = generatePathForLessonFile(fileUploadEntity);
         String fileName = listFilesByPath(downloadPath).get(0);
         DbxDownloader downloader  = dbxClient.files().download(downloadPath + "/" + fileName);
         return new FileDataContainer(downloader.getInputStream(), fileName);
     }
 
-    public void uploadFile(FileUpload fileUpload, InputStream fin, String originalFilename, String role) throws IOException, DbxException {
+    public void uploadFile(FileUploadEntity fileUploadEntity, InputStream fin, String originalFilename, String role) throws IOException, DbxException {
         String uploadPath = "";
         if(role.equals("TEACHER")) {
-            uploadPath =  generatePathForTeacherActivityFile(fileUpload.getActivityId().getId()) + "/" + originalFilename;
+            uploadPath =  generatePathForTeacherActivityFile(fileUploadEntity.getActivityEntityId().getId()) + "/" + originalFilename;
         } else {
-            uploadPath = generatePathForActivityFile(fileUpload) + "/" + originalFilename;
+            uploadPath = generatePathForActivityFile(fileUploadEntity) + "/" + originalFilename;
         }
         dbxClient.files().uploadBuilder(uploadPath).uploadAndFinish(fin);
     }
 
-    public void uploadFileForLesson(FileUpload fileUpload, InputStream fin, String originalFilename) throws IOException, DbxException {
-        String uploadPath = generatePathForLessonFile(fileUpload) + "/" + originalFilename;
+    public void uploadFileForLesson(FileUploadEntity fileUploadEntity, InputStream fin, String originalFilename) throws IOException, DbxException {
+        String uploadPath = generatePathForLessonFile(fileUploadEntity) + "/" + originalFilename;
         dbxClient.files().uploadBuilder(uploadPath).uploadAndFinish(fin);
     }
 
@@ -59,15 +59,15 @@ public class UploadingService {
         return "/activity/" + activityId + "/MAIN";
     }
 
-    private String generatePathForActivityFile(FileUpload fileUpload) {
-        String activityId = fileUpload.getActivityId().getId();
-        String fileUploadId = fileUpload.getId();
+    private String generatePathForActivityFile(FileUploadEntity fileUploadEntity) {
+        String activityId = fileUploadEntity.getActivityEntityId().getId();
+        String fileUploadId = fileUploadEntity.getId();
         return "/activity/" + activityId + "/" + fileUploadId;
     }
 
-    private String generatePathForLessonFile(FileUpload fileUpload) {
-        String lessonId = fileUpload.getLessonId().getId();
-        String fileUploadId = fileUpload.getId();
+    private String generatePathForLessonFile(FileUploadEntity fileUploadEntity) {
+        String lessonId = fileUploadEntity.getLessonEntityId().getId();
+        String fileUploadId = fileUploadEntity.getId();
         return "/lesson/" + lessonId + "/" + fileUploadId;
     }
 

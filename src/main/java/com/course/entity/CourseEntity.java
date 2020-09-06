@@ -1,16 +1,13 @@
 package com.course.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "course")
-public class Course extends BaseEntity<String>{
+public class CourseEntity extends BaseEntity<String>{
 
     @Column(name = "name")
     private String name;
@@ -23,23 +20,23 @@ public class Course extends BaseEntity<String>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
-    private User teacherId;
+    private UserEntity teacherId;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Activity> activities;
+    @OneToMany(mappedBy = "courseEntityId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ActivityEntity> activities;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CustomActivity> customActivities;
+    @OneToMany(mappedBy = "courseEntityId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CustomActivityEntity> customActivities;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ForumPost> forumPosts;
+    @OneToMany(mappedBy = "courseEntityId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ForumPostEntity> forumPostEntities;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "courseId", fetch = FetchType.LAZY)
-    private List<Lesson> lessons;
+    @OneToMany(mappedBy = "courseEntityId", fetch = FetchType.LAZY)
+    private List<LessonEntity> lessonEntities;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
@@ -48,7 +45,7 @@ public class Course extends BaseEntity<String>{
             joinColumns = { @JoinColumn(name = "course_id") },
             inverseJoinColumns = { @JoinColumn(name = "student_id") }
     )
-    private List<User> students;
+    private List<UserEntity> students;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
@@ -57,18 +54,18 @@ public class Course extends BaseEntity<String>{
             joinColumns = { @JoinColumn(name = "course_id") },
             inverseJoinColumns = { @JoinColumn(name = "class_id") }
     )
-    private List<CourseClass> courseClasses;
+    private List<CourseClassEntity> courseClassEntities;
 
-    public Course() {}
+    public CourseEntity() {}
 
-    public Course(String name, String description, User teacherId, String subjectId) {
+    public CourseEntity(String name, String description, UserEntity teacherId, String subjectId) {
         this.name = name;
         this.description = description;
         this.teacherId = teacherId;
         this.subjectId = subjectId;
     }
 
-    public Course(String id, String name, String description, User teacherId, String subjectId) {
+    public CourseEntity(String id, String name, String description, UserEntity teacherId, String subjectId) {
         super(id);
         this.name = name;
         this.description = description;
@@ -76,7 +73,7 @@ public class Course extends BaseEntity<String>{
         this.subjectId = subjectId;
     }
 
-    public Course(String id, String name, String description, User teacherId) {
+    public CourseEntity(String id, String name, String description, UserEntity teacherId) {
         super(id);
         this.name = name;
         this.description = description;
@@ -99,11 +96,11 @@ public class Course extends BaseEntity<String>{
         this.description = description;
     }
 
-    public User getTeacherId() {
+    public UserEntity getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(User teacherId) {
+    public void setTeacherId(UserEntity teacherId) {
         this.teacherId = teacherId;
     }
 
@@ -115,58 +112,58 @@ public class Course extends BaseEntity<String>{
         this.subjectId = subjectId;
     }
 
-    public List<Activity> getActivities() {
+    public List<ActivityEntity> getActivities() {
         return activities;
     }
 
-    public void setActivities(List<Activity> activities) {
+    public void setActivities(List<ActivityEntity> activities) {
         this.activities = activities;
     }
 
-    public List<CustomActivity> getCustomActivities() {
+    public List<CustomActivityEntity> getCustomActivities() {
         return customActivities;
     }
 
-    public void setCustomActivities(List<CustomActivity> customActivities) {
+    public void setCustomActivities(List<CustomActivityEntity> customActivities) {
         this.customActivities = customActivities;
     }
 
-    public List<ForumPost> getForumPosts() {
-        return forumPosts;
+    public List<ForumPostEntity> getForumPostEntities() {
+        return forumPostEntities;
     }
 
-    public void setForumPosts(List<ForumPost> forumPosts) {
-        this.forumPosts = forumPosts;
+    public void setForumPostEntities(List<ForumPostEntity> forumPostEntities) {
+        this.forumPostEntities = forumPostEntities;
     }
 
-    public List<User> getStudents() {
+    public List<UserEntity> getStudents() {
         return students;
     }
 
-    public void setStudents(List<User> students) {
+    public void setStudents(List<UserEntity> students) {
         this.students = students;
     }
 
-    public List<Lesson> getLessons() {
-        return lessons;
+    public List<LessonEntity> getLessonEntities() {
+        return lessonEntities;
     }
 
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
+    public void setLessonEntities(List<LessonEntity> lessonEntities) {
+        this.lessonEntities = lessonEntities;
     }
 
-    public List<CourseClass> getCourseClasses() {
-        return courseClasses;
+    public List<CourseClassEntity> getCourseClassEntities() {
+        return courseClassEntities;
     }
 
-    public void setCourseClasses(List<CourseClass> students) {
-        this.courseClasses = courseClasses;
+    public void setCourseClassEntities(List<CourseClassEntity> students) {
+        this.courseClassEntities = courseClassEntities;
     }
 
     @Override
     public boolean equals(Object object) {
-        if(object instanceof Course) {
-            return this.getId().equals(((Course)object).getId());
+        if(object instanceof CourseEntity) {
+            return this.getId().equals(((CourseEntity)object).getId());
         }
         return false;
     }

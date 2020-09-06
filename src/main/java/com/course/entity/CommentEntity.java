@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "comment")
-public class Comment extends BaseEntity<String> implements Comparable<Comment> {
+public class CommentEntity extends BaseEntity<String> implements Comparable<CommentEntity> {
 
     @Column(name = "content")
     private String content;
@@ -17,18 +17,18 @@ public class Comment extends BaseEntity<String> implements Comparable<Comment> {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private ForumPost postId;
+    private ForumPostEntity forumPostEntityId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    private User authorId;
+    private UserEntity authorId;
 
-    public Comment() {}
+    public CommentEntity() {}
 
-    public Comment(String id, Timestamp createDateTime, String content, ForumPost postId, User authorId) {
+    public CommentEntity(String id, Timestamp createDateTime, String content, ForumPostEntity postId, UserEntity authorId) {
         super(id, createDateTime);
         this.content = content;
-        this.postId = postId;
+        this.forumPostEntityId = postId;
         this.authorId = authorId;
     }
 
@@ -40,24 +40,24 @@ public class Comment extends BaseEntity<String> implements Comparable<Comment> {
         this.content = content;
     }
 
-    public ForumPost getPostId() {
-        return postId;
+    public ForumPostEntity getForumPostEntityId() {
+        return forumPostEntityId;
     }
 
-    public void setPostId(ForumPost postId) {
-        this.postId = postId;
+    public void setForumPostEntityId(ForumPostEntity forumPostEntityId) {
+        this.forumPostEntityId = forumPostEntityId;
     }
 
-    public User getAuthorId() {
+    public UserEntity getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(User authorId) {
+    public void setAuthorId(UserEntity authorId) {
         this.authorId = authorId;
     }
 
     @Override
-    public int compareTo(Comment o) {
+    public int compareTo(CommentEntity o) {
         return this.getCreateDateTime().compareTo(o.getCreateDateTime());
     }
 

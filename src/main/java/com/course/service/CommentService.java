@@ -1,9 +1,9 @@
 package com.course.service;
 
-import com.course.entity.Comment;
+import com.course.entity.CommentEntity;
 
 public interface CommentService {
 
-    Comment saveByForumPostId(Comment comment, String forumPostId);
+    CommentEntity saveByForumPostId(CommentEntity commentEntity, String forumPostId);
 
 }

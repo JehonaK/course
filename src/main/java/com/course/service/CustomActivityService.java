@@ -1,9 +1,9 @@
 package com.course.service;
 
-import com.course.entity.CustomActivity;
+import com.course.entity.CustomActivityEntity;
 
 import java.util.List;
 
 public interface CustomActivityService {
-    List<CustomActivity> getCustomActivityByCourseId(String courseId);
+    List<CustomActivityEntity> getCustomActivityByCourseId(String courseId);
 }

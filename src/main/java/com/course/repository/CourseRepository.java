@@ -1,12 +1,9 @@
 package com.course.repository;
 
-import com.course.entity.Course;
-import com.course.entity.User;
+import com.course.entity.CourseEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface CourseRepository extends BaseRepository<Course, String>{
+public interface CourseRepository extends BaseRepository<CourseEntity, String>{
 
 }

@@ -1,7 +1,7 @@
 package com.course.service;
 
-import com.course.entity.Course;
-import com.course.entity.CustomActivity;
+import com.course.entity.CourseEntity;
+import com.course.entity.CustomActivityEntity;
 import com.course.repository.BaseRepository;
 import com.course.repository.CustomActivityRepository;
 import org.springframework.stereotype.Service;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomActivityServiceImpl extends BaseServiceImpl<CustomActivity, String> implements CustomActivityService {
+public class CustomActivityServiceImpl extends BaseServiceImpl<CustomActivityEntity, String> implements CustomActivityService {
 
     private CustomActivityRepository customActivityRepository;
     private CourseServiceImpl courseService;
 
-    public CustomActivityServiceImpl(BaseRepository<CustomActivity, String> baseRepository, CustomActivityRepository customActivityRepository,
+    public CustomActivityServiceImpl(BaseRepository<CustomActivityEntity, String> baseRepository, CustomActivityRepository customActivityRepository,
                                      CourseServiceImpl courseService) {
         super(baseRepository);
         this.customActivityRepository = customActivityRepository;
@@ -22,8 +22,8 @@ public class CustomActivityServiceImpl extends BaseServiceImpl<CustomActivity, S
     }
 
     @Override
-    public List<CustomActivity> getCustomActivityByCourseId(String courseId) {
-        Course course = courseService.findById(courseId);
-        return customActivityRepository.findByCourseId(course);
+    public List<CustomActivityEntity> getCustomActivityByCourseId(String courseId) {
+        CourseEntity courseEntity = courseService.findById(courseId);
+        return customActivityRepository.findByCourseEntityId(courseEntity);
     }
 }

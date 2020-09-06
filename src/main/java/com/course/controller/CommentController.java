@@ -1,7 +1,6 @@
 package com.course.controller;
 
-import com.course.entity.Activity;
-import com.course.entity.Comment;
+import com.course.entity.CommentEntity;
 import com.course.exception.ResponseException;
 import com.course.service.CommentServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("post-comment")
-public class CommentController {
+public class CommentController extends BaseController {
 
     private CommentServiceImpl commentService;
 
@@ -21,7 +20,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public Comment create(@RequestBody Comment comment, @RequestParam("postId") String postId){
+    public CommentEntity create(@RequestBody CommentEntity comment, @RequestParam("postId") String postId){
         try {
             return commentService.saveByForumPostId(comment, postId);
         } catch (Exception e) {
@@ -30,7 +29,7 @@ public class CommentController {
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody Comment comment, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody CommentEntity comment, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
             commentService.update(comment, id);
@@ -42,7 +41,7 @@ public class CommentController {
     }
 
     @GetMapping("{commentId}")
-    public Comment getById(@PathVariable String commentId) {
+    public CommentEntity getById(@PathVariable String commentId) {
         return commentService.findById(commentId);
     }
 

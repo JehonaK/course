@@ -1,6 +1,6 @@
 package com.course.controller;
 
-import com.course.entity.Activity;
+import com.course.entity.ActivityEntity;
 import com.course.exception.ResponseException;
 import com.course.service.ActivityServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("activity")
-public class ActivityController {
+public class ActivityController extends BaseController {
 
     private ActivityServiceImpl activityService;
 
@@ -22,29 +22,29 @@ public class ActivityController {
     }
 
     @GetMapping("{activityId}")
-    public Activity getById(@PathVariable String activityId) {
+    public ActivityEntity getById(@PathVariable String activityId) {
         return activityService.findById(activityId);
     }
 
     @GetMapping
-    public List<Activity> getActivitiesByCourseId(@RequestParam("courseId") String courseId) {
+    public List<ActivityEntity> getActivitiesByCourseId(@RequestParam("courseId") String courseId) {
         return activityService.getActivitiesByCourseId(courseId);
     }
 
     @PostMapping
-    public Activity create(@RequestBody Activity activity){
+    public ActivityEntity create(@RequestBody ActivityEntity activityEntity){
         try {
-            return activityService.save(activity);
+            return activityService.save(activityEntity);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody Activity activity, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody ActivityEntity activityEntity, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
-            activityService.update(activity, id);
+            activityService.update(activityEntity, id);
             responseMap.put("id", id);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);

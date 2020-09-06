@@ -1,6 +1,6 @@
 package com.course.controller;
 
-import com.course.entity.Course;
+import com.course.entity.CourseEntity;
 import com.course.exception.ResponseException;
 import com.course.integration.models.SerializableTeacherSubjectConnection;
 import com.course.service.CourseServiceImpl;
@@ -12,7 +12,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("course")
-public class CourseController {
+public class CourseController extends BaseController {
 
     private CourseServiceImpl courseService;
 
@@ -21,30 +21,30 @@ public class CourseController {
     }
 
     @GetMapping("{courseId}")
-    public Course getById(@PathVariable String courseId) {
+    public CourseEntity getById(@PathVariable String courseId) {
         return courseService.findById(courseId);
     }
 
     @GetMapping("teacher")
-    public List<Course> getCoursesByTeacherId(@RequestParam(required = false) String teacherId) {
+    public List<CourseEntity> getCoursesByTeacherId(@RequestParam(required = false) String teacherId) {
         return courseService.getCoursesByTeacherId(teacherId);
     }
 
     @GetMapping("student")
-    public List<Course> getCoursesByStudentId(@RequestParam(required = false) String studentId) {
+    public List<CourseEntity> getCoursesByStudentId(@RequestParam(required = false) String studentId) {
         return courseService.getCoursesByStudentId(studentId);
     }
 
     @GetMapping("course-class")
-    public List<Course> getCoursesByCourseClassId(@RequestParam String courseClassId) {
+    public List<CourseEntity> getCoursesByCourseClassId(@RequestParam String courseClassId) {
         return courseService.getCoursesByCourseClassId(courseClassId);
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody Course course, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody CourseEntity courseEntity, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
-            courseService.update(course, id);
+            courseService.update(courseEntity, id);
             responseMap.put("id", id);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);

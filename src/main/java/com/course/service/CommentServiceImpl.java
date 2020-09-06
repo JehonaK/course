@@ -1,27 +1,23 @@
 package com.course.service;
 
 import com.course.PerRequestIdStorage;
-import com.course.entity.Comment;
-import com.course.entity.ForumPost;
-import com.course.entity.User;
-import com.course.integration.models.SerializableNotification;
+import com.course.entity.CommentEntity;
+import com.course.entity.ForumPostEntity;
+import com.course.entity.UserEntity;
 import com.course.integration.producers.NotificationProducer;
 import com.course.repository.BaseRepository;
 import com.course.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 @Service
-public class CommentServiceImpl extends BaseServiceImpl<Comment, String> implements CommentService {
+public class CommentServiceImpl extends BaseServiceImpl<CommentEntity, String> implements CommentService {
 
     private CommentRepository commentRepository;
     private UserServiceImpl userService;
     private NotificationProducer notificationProducer;
     private ForumPostServiceImpl forumPostService;
 
-    public CommentServiceImpl(BaseRepository<Comment, String> baseRepository, CommentRepository commentRepository, UserServiceImpl userService,
+    public CommentServiceImpl(BaseRepository<CommentEntity, String> baseRepository, CommentRepository commentRepository, UserServiceImpl userService,
                               NotificationProducer notificationProducer, ForumPostServiceImpl forumPostService) {
         super(baseRepository);
         this.commentRepository = commentRepository;
@@ -31,19 +27,19 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, String> impleme
     }
 
     @Override
-    public Comment saveByForumPostId(Comment comment, String forumPostId) {
-        User author = userService.findById(PerRequestIdStorage.getUserId());
+    public CommentEntity saveByForumPostId(CommentEntity comment, String forumPostId) {
+        UserEntity author = userService.findById(PerRequestIdStorage.getUserId());
         if (author == null) {
             throw new RuntimeException("Author not found!");
         }
-        ForumPost forumPost = forumPostService.findById(forumPostId);
-        if (forumPost == null) {
+        ForumPostEntity forumPostEntity = forumPostService.findById(forumPostId);
+        if (forumPostEntity == null) {
             throw new RuntimeException("Forum Post not found!");
         }
         comment.setAuthorId(author);
-        comment.setPostId(forumPost);
-//        notificationProducer.sendNotification(new SerializableNotification("Comment \"" + comment.getContent() + "\" in forum post with title \""
-//                + comment.getPostId().getTitle() + "\"", comment.getPostId().getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toCollection(ArrayList::new))));
+        comment.setForumPostEntityId(forumPostEntity);
+//        notificationProducer.sendNotification(new SerializableNotification("CommentEntity \"" + comment.getContent() + "\" in forum post with title \""
+//                + comment.getForumPostEntityId().getTitle() + "\"", comment.getForumPostEntityId().getCourseEntityId().getStudents().stream().map(UserEntity::getId).collect(Collectors.toCollection(ArrayList::new))));
         return commentRepository.save(comment);
     }
 

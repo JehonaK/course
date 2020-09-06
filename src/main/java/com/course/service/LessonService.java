@@ -1,9 +1,9 @@
 package com.course.service;
 
-import com.course.entity.Lesson;
+import com.course.entity.LessonEntity;
 
 import java.util.List;
 
 public interface LessonService {
-    List<Lesson> getLessonsByCourseId(String courseId);
+    List<LessonEntity> getLessonsByCourseId(String courseId);
 }

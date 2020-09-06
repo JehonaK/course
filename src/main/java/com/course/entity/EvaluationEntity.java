@@ -1,24 +1,22 @@
 package com.course.entity;
 
 import com.course.type.GradeSystem;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "evaluation")
-public class Evaluation extends BaseEntity<String> {
+public class EvaluationEntity extends BaseEntity<String> {
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    private Activity activityId;
+    private ActivityEntity activityEntityId;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    private User studentId;
+    private UserEntity studentId;
 
     @Column(name = "grade")
     private String grade;
@@ -29,24 +27,24 @@ public class Evaluation extends BaseEntity<String> {
     @Column(name = "feedback")
     private String feedback;
 
-//    @OneToOne(mappedBy = "evaluationId", fetch = FetchType.EAGER)
-//    private FileUpload fileUpload;
+//    @OneToOne(mappedBy = "evaluationEntityId", fetch = FetchType.EAGER)
+//    private FileUploadEntity fileUpload;
 
-    public Evaluation() {}
+    public EvaluationEntity() {}
 
-    public Evaluation(String id, String grade, GradeSystem gradeSystem, Activity activityId, User studentId) {
+    public EvaluationEntity(String id, String grade, GradeSystem gradeSystem, ActivityEntity activityEntityId, UserEntity studentId) {
         super(id);
         this.grade = grade;
         this.gradeSystem = gradeSystem;
-        this.activityId = activityId;
+        this.activityEntityId = activityEntityId;
         this.studentId = studentId;
     }
 
-    public Evaluation(String id, String grade, GradeSystem gradeSystem, Activity activityId, User studentId, String feedback) {
+    public EvaluationEntity(String id, String grade, GradeSystem gradeSystem, ActivityEntity activityEntityId, UserEntity studentId, String feedback) {
         super(id);
         this.grade = grade;
         this.gradeSystem = gradeSystem;
-        this.activityId = activityId;
+        this.activityEntityId = activityEntityId;
         this.studentId = studentId;
         this.feedback = feedback;
     }
@@ -67,19 +65,19 @@ public class Evaluation extends BaseEntity<String> {
         this.gradeSystem = gradeSystem;
     }
 
-    public Activity getActivityId() {
-        return activityId;
+    public ActivityEntity getActivityEntityId() {
+        return activityEntityId;
     }
 
-    public void setActivityId(Activity activityId) {
-        this.activityId = activityId;
+    public void setActivityEntityId(ActivityEntity activityEntityId) {
+        this.activityEntityId = activityEntityId;
     }
 
-    public User getStudentId() {
+    public UserEntity getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(User studentId) {
+    public void setStudentId(UserEntity studentId) {
         this.studentId = studentId;
     }
 

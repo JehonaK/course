@@ -1,16 +1,16 @@
 package com.course.service;
 
-import com.course.entity.Course;
+import com.course.entity.CourseEntity;
 import com.course.integration.models.SerializableTeacherSubjectConnection;
 
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getCoursesByTeacherId(String teacherId);
+    List<CourseEntity> getCoursesByTeacherId(String teacherId);
 
-    List<Course> getCoursesByStudentId(String studentId);
+    List<CourseEntity> getCoursesByStudentId(String studentId);
 
-    List<Course> getCoursesByCourseClassId(String courseClassId);
+    List<CourseEntity> getCoursesByCourseClassId(String courseClassId);
 
     void handleNewTeacherSubjectConnection(SerializableTeacherSubjectConnection connection);
 }

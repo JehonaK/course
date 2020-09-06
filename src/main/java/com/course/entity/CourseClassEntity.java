@@ -7,18 +7,18 @@ import java.util.List;
 
 @Entity
 @Table(name = "course_class")
-public class CourseClass extends BaseEntity<String> {
+public class CourseClassEntity extends BaseEntity<String> {
     @Column(name = "name")
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "courseClasses", fetch = FetchType.LAZY)
-    private List<Course> courses;
+    @ManyToMany(mappedBy = "courseClassEntities", fetch = FetchType.LAZY)
+    private List<CourseEntity> cours;
 
-    public CourseClass() {
+    public CourseClassEntity() {
     }
 
-    public CourseClass(String id, String name) {
+    public CourseClassEntity(String id, String name) {
         super(id);
         this.name = name;
     }
@@ -31,11 +31,11 @@ public class CourseClass extends BaseEntity<String> {
         this.name = name;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<CourseEntity> getCours() {
+        return cours;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCours(List<CourseEntity> cours) {
+        this.cours = cours;
     }
 }

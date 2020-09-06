@@ -1,14 +1,13 @@
 package com.course.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity<String> {
+public class UserEntity extends BaseEntity<String> {
 
     @Column(name = "first_name")
     private String firstName;
@@ -24,27 +23,27 @@ public class User extends BaseEntity<String> {
 
     @JsonIgnore
     @OneToMany(mappedBy = "authorId", fetch = FetchType.LAZY)
-    private List<ForumPost> forumPosts;
+    private List<ForumPostEntity> forumPostEntities;
 
     @JsonIgnore
     @OneToMany(mappedBy = "teacherId", fetch = FetchType.LAZY)
-    private List<Course> coursesTeaching;
+    private List<CourseEntity> coursesTeaching;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
-    private List<Course> coursesEnrolled;
+    private List<CourseEntity> coursesEnrolled;
 
     @JsonIgnore
     @OneToMany(mappedBy = "studentId", fetch = FetchType.LAZY)
-    private List<Evaluation> evaluations;
+    private List<EvaluationEntity> evaluationEntities;
 
     @JsonIgnore
     @OneToMany(mappedBy = "uploadedBy", fetch = FetchType.LAZY)
-    private List<FileUpload> fileUploads;
+    private List<FileUploadEntity> fileUploadEntities;
 
-    public User() {}
+    public UserEntity() {}
 
-    public User(String id, String firstName, String lastName, String email, String role) {
+    public UserEntity(String id, String firstName, String lastName, String email, String role) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,44 +83,44 @@ public class User extends BaseEntity<String> {
         this.role = role;
     }
 
-    public List<ForumPost> getForumPosts() {
-        return forumPosts;
+    public List<ForumPostEntity> getForumPostEntities() {
+        return forumPostEntities;
     }
 
-    public void setForumPosts(List<ForumPost> forumPosts) {
-        this.forumPosts = forumPosts;
+    public void setForumPostEntities(List<ForumPostEntity> forumPostEntities) {
+        this.forumPostEntities = forumPostEntities;
     }
 
-    public List<Course> getCoursesTeaching() {
+    public List<CourseEntity> getCoursesTeaching() {
         return coursesTeaching;
     }
 
-    public void setCoursesTeaching(List<Course> coursesTeaching) {
+    public void setCoursesTeaching(List<CourseEntity> coursesTeaching) {
         this.coursesTeaching = coursesTeaching;
     }
 
-    public List<Course> getCoursesEnrolled() {
+    public List<CourseEntity> getCoursesEnrolled() {
         return coursesEnrolled;
     }
 
-    public void setCoursesEnrolled(List<Course> coursesEnrolled) {
+    public void setCoursesEnrolled(List<CourseEntity> coursesEnrolled) {
         this.coursesEnrolled = coursesEnrolled;
     }
 
-    public List<Evaluation> getEvaluations() {
-        return evaluations;
+    public List<EvaluationEntity> getEvaluationEntities() {
+        return evaluationEntities;
     }
 
-    public void setEvaluations(List<Evaluation> evaluations) {
-        this.evaluations = evaluations;
+    public void setEvaluationEntities(List<EvaluationEntity> evaluationEntities) {
+        this.evaluationEntities = evaluationEntities;
     }
 
-    public List<FileUpload> getFileUploads() {
-        return fileUploads;
+    public List<FileUploadEntity> getFileUploadEntities() {
+        return fileUploadEntities;
     }
 
-    public void setFileUploads(List<FileUpload> fileUploads) {
-        this.fileUploads = fileUploads;
+    public void setFileUploadEntities(List<FileUploadEntity> fileUploadEntities) {
+        this.fileUploadEntities = fileUploadEntities;
     }
 
 }

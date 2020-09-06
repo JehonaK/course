@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "activity")
-public class Activity extends BaseEntity<String> implements Comparable<Activity>{
+public class ActivityEntity extends BaseEntity<String> implements Comparable<ActivityEntity>{
 
     @Column(name = "name")
     private String name;
@@ -33,20 +33,20 @@ public class Activity extends BaseEntity<String> implements Comparable<Activity>
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    private Course courseId;
+    private CourseEntity courseEntityId;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY)
-    private List<Evaluation> evaluations;
+    @OneToMany(mappedBy = "activityEntityId", fetch = FetchType.LAZY)
+    private List<EvaluationEntity> evaluationEntities;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "activityId", fetch = FetchType.LAZY)
-    private List<FileUpload> fileUploads;
+    @OneToMany(mappedBy = "activityEntityId", fetch = FetchType.LAZY)
+    private List<FileUploadEntity> fileUploadEntities;
 
-    public Activity() {}
+    public ActivityEntity() {}
 
-    public Activity(String id, String name, Timestamp deadline, String description, boolean hasFileUpload,
-                    GradeSystem gradeSystem, String grade, Course courseId) {
+    public ActivityEntity(String id, String name, Timestamp deadline, String description, boolean hasFileUpload,
+                          GradeSystem gradeSystem, String grade, CourseEntity courseEntityId) {
         super(id);
         this.name = name;
         this.deadline = deadline;
@@ -54,7 +54,7 @@ public class Activity extends BaseEntity<String> implements Comparable<Activity>
         this.hasFileUpload = hasFileUpload;
         this.gradeSystem = gradeSystem;
         this.grade = grade;
-        this.courseId = courseId;
+        this.courseEntityId = courseEntityId;
     }
 
     public String getName() {
@@ -73,20 +73,20 @@ public class Activity extends BaseEntity<String> implements Comparable<Activity>
         this.deadline = deadline;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public CourseEntity getCourseEntityId() {
+        return courseEntityId;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourseEntityId(CourseEntity courseEntityId) {
+        this.courseEntityId = courseEntityId;
     }
 
-    public List<Evaluation> getEvaluations() {
-        return evaluations;
+    public List<EvaluationEntity> getEvaluationEntities() {
+        return evaluationEntities;
     }
 
-    public void setEvaluations(List<Evaluation> evaluations) {
-        this.evaluations = evaluations;
+    public void setEvaluationEntities(List<EvaluationEntity> evaluationEntities) {
+        this.evaluationEntities = evaluationEntities;
     }
 
     public String getDescription() {
@@ -121,17 +121,17 @@ public class Activity extends BaseEntity<String> implements Comparable<Activity>
         this.grade = grade;
     }
 
-    public List<FileUpload> getFileUploads() {
-        return fileUploads;
+    public List<FileUploadEntity> getFileUploadEntities() {
+        return fileUploadEntities;
     }
 
-    public void setFileUploads(List<FileUpload> fileUploads) {
-        this.fileUploads = fileUploads;
+    public void setFileUploadEntities(List<FileUploadEntity> fileUploadEntities) {
+        this.fileUploadEntities = fileUploadEntities;
     }
 
 
     @Override
-    public int compareTo(Activity activity) {
-        return getCreateDateTime().compareTo(activity.getCreateDateTime());
+    public int compareTo(ActivityEntity activityEntity) {
+        return getCreateDateTime().compareTo(activityEntity.getCreateDateTime());
     }
 }

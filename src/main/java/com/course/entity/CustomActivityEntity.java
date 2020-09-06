@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "custom_activity")
-public class CustomActivity extends BaseEntity<String>{
+public class CustomActivityEntity extends BaseEntity<String>{
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private Course courseId;
+    private CourseEntity courseEntityId;
 
     @Column(name = "grade_system")
     private GradeSystem gradeSystem;
@@ -29,10 +29,10 @@ public class CustomActivity extends BaseEntity<String>{
     @Column(name = "name")
     private String name;
 
-    public CustomActivity() {}
+    public CustomActivityEntity() {}
 
-    public CustomActivity(Course courseId, GradeSystem gradeSystem, boolean hasEvaluation, boolean hasFileUpload, boolean hasDeadline, String name) {
-        this.courseId = courseId;
+    public CustomActivityEntity(CourseEntity courseEntityId, GradeSystem gradeSystem, boolean hasEvaluation, boolean hasFileUpload, boolean hasDeadline, String name) {
+        this.courseEntityId = courseEntityId;
         this.gradeSystem = gradeSystem;
         this.hasEvaluation = hasEvaluation;
         this.hasFileUpload = hasFileUpload;
@@ -40,10 +40,10 @@ public class CustomActivity extends BaseEntity<String>{
         this.name = name;
     }
 
-    public CustomActivity(String id, Course courseId, GradeSystem gradeSystem, boolean hasEvaluation, boolean hasFileUpload,
-                          boolean hasDeadline, String name) {
+    public CustomActivityEntity(String id, CourseEntity courseEntityId, GradeSystem gradeSystem, boolean hasEvaluation, boolean hasFileUpload,
+                                boolean hasDeadline, String name) {
         super(id);
-        this.courseId = courseId;
+        this.courseEntityId = courseEntityId;
         this.gradeSystem = gradeSystem;
         this.hasEvaluation = hasEvaluation;
         this.hasFileUpload = hasFileUpload;
@@ -51,12 +51,12 @@ public class CustomActivity extends BaseEntity<String>{
         this.name = name;
     }
 
-    public Course getCourseId() {
-        return courseId;
+    public CourseEntity getCourseEntityId() {
+        return courseEntityId;
     }
 
-    public void setCourseId(Course courseId) {
-        this.courseId = courseId;
+    public void setCourseEntityId(CourseEntity courseEntityId) {
+        this.courseEntityId = courseEntityId;
     }
 
     public GradeSystem getGradeSystem() {

@@ -1,6 +1,6 @@
 package com.course.controller;
 
-import com.course.entity.FileUpload;
+import com.course.entity.FileUploadEntity;
 import com.course.exception.ResponseException;
 import com.course.service.FileUploadServiceImpl;
 import com.course.service.UploadingService;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("upload")
-public class FileUploadController {
+public class FileUploadController extends BaseController {
 
     private FileUploadServiceImpl fileUploadService;
     private UploadingService uploadingService;
@@ -28,7 +28,7 @@ public class FileUploadController {
     }
 
     @GetMapping("{fileUploadId}")
-    public FileUpload getById(@PathVariable String fileUploadId) {
+    public FileUploadEntity getById(@PathVariable String fileUploadId) {
         return fileUploadService.findById(fileUploadId);
     }
 
@@ -48,22 +48,22 @@ public class FileUploadController {
     }
 
     @GetMapping("activity")
-    public List<FileUpload> getFileUploadsByActivityId(@RequestParam("activityId") String activityId) {
+    public List<FileUploadEntity> getFileUploadsByActivityId(@RequestParam("activityId") String activityId) {
         return fileUploadService.getFileUploadsByActivityId(activityId);
     }
 
     @GetMapping("lesson")
-    public List<FileUpload> getFileUploadsByLessonId(@RequestParam("activityId") String activityId) {
+    public List<FileUploadEntity> getFileUploadsByLessonId(@RequestParam("activityId") String activityId) {
         return fileUploadService.getFileUploadsByLessonId(activityId);
     }
 
     @PostMapping("activity")
-    public FileUpload createForActivity(@RequestParam("file") MultipartFile multipartFile, @RequestParam("activityId") String activityId) throws IOException, DbxException {
+    public FileUploadEntity createForActivity(@RequestParam("file") MultipartFile multipartFile, @RequestParam("activityId") String activityId) throws IOException, DbxException {
         return fileUploadService.uploadAndSaveFile(multipartFile, activityId);
     }
 
     @PostMapping("lesson")
-    public FileUpload createForLesson(@RequestParam("file") MultipartFile multipartFile, @RequestParam("lessonId") String lessonId) {
+    public FileUploadEntity createForLesson(@RequestParam("file") MultipartFile multipartFile, @RequestParam("lessonId") String lessonId) {
         try {
             return fileUploadService.uploadAndSaveFileForLesson(multipartFile, lessonId);
         } catch (Exception e) {

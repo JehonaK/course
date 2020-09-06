@@ -1,6 +1,5 @@
 package com.course.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,15 +8,15 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "file_upload")
-public class FileUpload extends BaseEntity<String> {
+public class FileUploadEntity extends BaseEntity<String> {
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    private Activity activityId;
+    private ActivityEntity activityEntityId;
 
     @ManyToOne
     @JoinColumn(name = "lesson_id")
-    private Lesson lessonId;
+    private LessonEntity lessonEntityId;
 
     @Column(name = "upload_time")
     private Timestamp uploadTime;
@@ -27,17 +26,17 @@ public class FileUpload extends BaseEntity<String> {
 
     @ManyToOne
     @JoinColumn(name = "uploaded_by")
-    private User uploadedBy;
+    private UserEntity uploadedBy;
 
-    public FileUpload() {}
+    public FileUploadEntity() {}
 
-    public FileUpload(Activity activityId, Timestamp uploadTime) {
-        this.activityId = activityId;
+    public FileUploadEntity(ActivityEntity activityEntityId, Timestamp uploadTime) {
+        this.activityEntityId = activityEntityId;
         this.uploadTime = uploadTime;
     }
 
-    public FileUpload(Lesson lessonId, Timestamp uploadTime, String originalName) {
-        this.lessonId = lessonId;
+    public FileUploadEntity(LessonEntity lessonEntityId, Timestamp uploadTime, String originalName) {
+        this.lessonEntityId = lessonEntityId;
         this.uploadTime = uploadTime;
         this.originalName = originalName;
     }
@@ -50,20 +49,20 @@ public class FileUpload extends BaseEntity<String> {
         this.uploadTime = uploadTime;
     }
 
-    public Activity getActivityId() {
-        return activityId;
+    public ActivityEntity getActivityEntityId() {
+        return activityEntityId;
     }
 
-    public void setActivityId(Activity activityId) {
-        this.activityId = activityId;
+    public void setActivityEntityId(ActivityEntity activityEntityId) {
+        this.activityEntityId = activityEntityId;
     }
 
-    public Lesson getLessonId() {
-        return lessonId;
+    public LessonEntity getLessonEntityId() {
+        return lessonEntityId;
     }
 
-    public void setLessonId(Lesson lessonId) {
-        this.lessonId = lessonId;
+    public void setLessonEntityId(LessonEntity lessonEntityId) {
+        this.lessonEntityId = lessonEntityId;
     }
 
     public String getOriginalName() {
@@ -74,11 +73,11 @@ public class FileUpload extends BaseEntity<String> {
         this.originalName = originalName;
     }
 
-    public User getUploadedBy() {
+    public UserEntity getUploadedBy() {
         return uploadedBy;
     }
 
-    public void setUploadedBy(User uploadedBy) {
+    public void setUploadedBy(UserEntity uploadedBy) {
         this.uploadedBy = uploadedBy;
     }
 

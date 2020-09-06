@@ -1,6 +1,6 @@
 package com.course.controller;
 
-import com.course.entity.Evaluation;
+import com.course.entity.EvaluationEntity;
 import com.course.exception.ResponseException;
 import com.course.service.EvaluationServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("evaluation")
-public class EvaluationController {
+public class EvaluationController extends BaseController {
 
     private EvaluationServiceImpl evaluationService;
 
@@ -22,29 +22,29 @@ public class EvaluationController {
     }
 
     @GetMapping("{evaluationId}")
-    public Evaluation getById(@PathVariable String evaluationId) {
+    public EvaluationEntity getById(@PathVariable String evaluationId) {
         return evaluationService.findById(evaluationId);
     }
 
     @GetMapping
-    public List<Evaluation> getEvaluationsByStudentIdAndCourseId(@RequestParam(required = false) String studentId, @RequestParam("courseId") String courseId) {
+    public List<EvaluationEntity> getEvaluationsByStudentIdAndCourseId(@RequestParam(required = false) String studentId, @RequestParam("courseId") String courseId) {
         return evaluationService.getEvaluationsByStudentIdAndCourseId(studentId, courseId);
     }
 
     @PostMapping
-    public Evaluation create(@RequestBody Evaluation evaluation){
+    public EvaluationEntity create(@RequestBody EvaluationEntity evaluationEntity){
         try {
-            return evaluationService.save(evaluation);
+            return evaluationService.save(evaluationEntity);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@RequestBody Evaluation evaluation, @PathVariable String id) throws ResponseException {
+    public Map<String, String> update(@RequestBody EvaluationEntity evaluationEntity, @PathVariable String id) throws ResponseException {
         Map<String, String> responseMap = new HashMap<>();
         try {
-            evaluationService.update(evaluation, id);
+            evaluationService.update(evaluationEntity, id);
             responseMap.put("id", id);
         } catch (Exception e) {
             throw new ResponseException(e.getMessage(), HttpStatus.BAD_REQUEST);

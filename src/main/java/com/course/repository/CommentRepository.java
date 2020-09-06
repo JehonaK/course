@@ -1,7 +1,7 @@
 package com.course.repository;
 
-import com.course.entity.Comment;
+import com.course.entity.CommentEntity;
 
-public interface CommentRepository extends BaseRepository<Comment,String> {
+public interface CommentRepository extends BaseRepository<CommentEntity,String> {
 
 }

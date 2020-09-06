@@ -1,8 +1,8 @@
 package com.course.repository;
 
-import com.course.entity.FileUpload;
+import com.course.entity.FileUploadEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FileUploadRepository extends BaseRepository<FileUpload, String>{
+public interface FileUploadRepository extends BaseRepository<FileUploadEntity, String>{
 }
