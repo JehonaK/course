@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.course.type.GradeSystem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "evaluation")
+@ApiEntity
 public class Evaluation extends BaseEntity<String> {
 
     @ManyToOne

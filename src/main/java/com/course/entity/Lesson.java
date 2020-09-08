@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
+@ApiEntity
 public class Lesson extends BaseEntity<String> implements Comparable<Lesson> {
 
     @Column(name = "name")

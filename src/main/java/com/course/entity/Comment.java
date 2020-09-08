@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "comment")
+@ApiEntity
 public class Comment extends BaseEntity<String> implements Comparable<Comment> {
 
     @Column(name = "content")
