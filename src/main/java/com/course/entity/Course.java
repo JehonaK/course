@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "course")
+@ApiEntity
 public class Course extends BaseEntity<String>{
 
     @Column(name = "name")

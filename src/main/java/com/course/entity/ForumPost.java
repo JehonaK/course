@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "forum_post")
+@ApiEntity
 public class ForumPost extends BaseEntity<String>{
 
     @Column(name = "title")

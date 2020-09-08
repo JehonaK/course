@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.course.type.GradeSystem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "activity")
+@ApiEntity
 public class Activity extends BaseEntity<String> implements Comparable<Activity>{
 
     @Column(name = "name")

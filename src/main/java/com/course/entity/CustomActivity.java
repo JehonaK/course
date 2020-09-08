@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.course.type.GradeSystem;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "custom_activity")
+@ApiEntity
 public class CustomActivity extends BaseEntity<String>{
 
     @ManyToOne

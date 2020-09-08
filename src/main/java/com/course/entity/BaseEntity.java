@@ -1,5 +1,6 @@
 package com.course.entity;
 
+import com.course.annotations.ApiEntity;
 import com.course.type.RecordStatus;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 
 @MappedSuperclass
 @Data
+@ApiEntity
 public abstract class BaseEntity<T> {
 
     @Id
