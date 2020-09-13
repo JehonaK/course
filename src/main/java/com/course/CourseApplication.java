@@ -9,6 +9,7 @@ import com.blueveery.springrest2ts.filters.HasAnnotationJavaTypeFilter;
 import com.blueveery.springrest2ts.implgens.Angular4ImplementationGenerator;
 import com.course.annotations.ApiEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -20,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Set;
 
-//@EnableRabbit
+@EnableRabbit
 @EnableEurekaClient
 @SpringBootApplication
 public class CourseApplication extends SpringBootServletInitializer {

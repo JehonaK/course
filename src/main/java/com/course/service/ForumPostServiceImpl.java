@@ -4,6 +4,7 @@ import com.course.PerRequestIdStorage;
 import com.course.entity.Course;
 import com.course.entity.ForumPost;
 import com.course.entity.User;
+import com.course.integration.models.SerializableNotification;
 import com.course.integration.producers.NotificationProducer;
 import com.course.repository.BaseRepository;
 import com.course.repository.ForumPostRepository;
@@ -39,7 +40,15 @@ public class ForumPostServiceImpl extends BaseServiceImpl<ForumPost, String> imp
             }
             forumPost.setAuthorId(author);
         }
-        return forumPostRepository.save(forumPost);
+        ForumPost savedForumPost = forumPostRepository.save(forumPost);
+        ArrayList<String> recipients = new ArrayList<>();
+        for (User recipient : savedForumPost.getCourseId().getStudents()) {
+            recipients.add(recipient.getId());
+        }
+        String content = "New post by " + forumPost.getAuthorId().getFirstName() + " in " + forumPost.getCourseId().getName();
+        SerializableNotification serializableNotification = new SerializableNotification(content, recipients);
+        notificationProducer.sendNotification(serializableNotification);
+        return savedForumPost;
     }
 
     @Override
