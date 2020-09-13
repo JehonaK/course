@@ -11,6 +11,7 @@ import com.course.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,8 +43,15 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, String> impleme
         }
         comment.setAuthorId(author);
         comment.setPostId(forumPost);
-//        notificationProducer.sendNotification(new SerializableNotification("Comment \"" + comment.getContent() + "\" in forum post with title \""
-//                + comment.getPostId().getTitle() + "\"", comment.getPostId().getCourseId().getStudents().stream().map(User::getId).collect(Collectors.toCollection(ArrayList::new))));
+        ArrayList<String> recipients = new ArrayList<>();
+        for (User recipient : comment.getPostId().getCourseId().getStudents()) {
+            recipients.add(recipient.getId());
+        }
+        recipients.add("a");
+        String content = "Comment -" + comment.getContent() + "- in forum post with title -"
+                + comment.getPostId().getTitle();
+        SerializableNotification serializableNotification = new SerializableNotification(content, recipients);
+        notificationProducer.sendNotification(serializableNotification);
         return commentRepository.save(comment);
     }
 

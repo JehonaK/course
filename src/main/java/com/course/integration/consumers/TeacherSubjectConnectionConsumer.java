@@ -6,11 +6,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ConnectionConsumer {
+public class TeacherSubjectConnectionConsumer {
 
     private CourseServiceImpl courseService;
 
-    public ConnectionConsumer(CourseServiceImpl courseService) {
+    public TeacherSubjectConnectionConsumer(CourseServiceImpl courseService) {
         this.courseService = courseService;
     }
 

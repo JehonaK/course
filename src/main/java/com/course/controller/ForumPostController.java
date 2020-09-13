@@ -20,7 +20,7 @@ public class ForumPostController {
         this.forumPostService = forumPostService;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+
     @PostMapping
     public ForumPost create(@RequestBody ForumPost forumPost){
         try {
